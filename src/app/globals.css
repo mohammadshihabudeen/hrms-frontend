@@ -5,3 +5,48 @@
 input {
   color: black;
 }
+.home-card-gradient{
+  background: linear-gradient(90deg, hsla(190, 68%, 50%, 1) 0%, hsla(239, 34%, 47%, 1) 100%);
+}
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  flex: 1;
+}
+
+.content {
+  height: 100%;
+  background-color: #f1f1f1;
+  margin-top: 55px;
+  flex-grow: 1;
+  margin-left: 150px;
+  transition: margin-left 0.3s;
+}
+
+.sidebar-open .content {
+  margin-left: 150px;
+}
+
+.sidebar-closed .content {
+  margin-left: 60px;
+}
+
+@media (max-width: 768px) {
+  /* html{
+    min-width: 300px;//for width auto 
+  } */
+  .content {
+    margin-top: 75px;
+    margin-left: 60px;
+  }
+}

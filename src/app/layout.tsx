@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import "./styles/index.css";
 import Provider from "./store/Provider";
-import SideBar from "../app/components/SideBar"; // Adjust the path as necessary
-import Header from "./components/Header";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,13 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider>
-          <div className="flex">
-            <Header />
-            <SideBar />
-            <main className="flex-1">{children}</main>
-          </div>
-        </Provider>
+        <Provider>{children}</Provider>
       </body>
     </html>
   );

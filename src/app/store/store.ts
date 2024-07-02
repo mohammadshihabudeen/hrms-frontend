@@ -2,10 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import sidebarReducer from "./slices/sidebarSlice";
 import userReducer from "./slices/userSlice";
 import loginReducer from "./slices/loginSlice";
+import activitiesReducer from "./slices/activitiesSlice";
 const store = configureStore({
   reducer: {
     sidebar: sidebarReducer,
     user: userReducer,
+    login: loginReducer,
+    activities: activitiesReducer,
   },
 });
 

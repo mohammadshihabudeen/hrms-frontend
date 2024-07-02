@@ -37,7 +37,7 @@ const Login: React.FC = () => {
       return setErrorMessage("Invalid email or password");
 
     dispatch(setLogin(true));
-    router.push("/Home");
+    router.push("pages/Home");
   };
 
   return (

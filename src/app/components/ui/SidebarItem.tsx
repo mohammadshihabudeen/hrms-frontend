@@ -15,7 +15,7 @@ type props = {
 const SidebarItem = ({ item, isOpen, onClick, isActive }: props) => {
   return (
     <a
-      href={`${item.name !== "Logout" ? "/" + item.name : "Login"}`}
+      href={`${item.name !== "Logout" ? "/pages/" + item.name : "/"}`}
       onClick={isOpen ? onClick : undefined}
       className="ps-4 flex items-center p-2 hover:bg-gray-200 relative mb-4"
     >
