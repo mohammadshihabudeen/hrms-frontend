@@ -1,5 +1,6 @@
 import Image from "next/image";
+import Login from "./components/Login";
 
 export default function Home() {
-  return <h1>Page hello</h1>;
+  return <Login />;
 }
