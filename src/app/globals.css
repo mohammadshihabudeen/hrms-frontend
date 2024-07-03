@@ -5,7 +5,7 @@
 input {
   color: black;
 }
-.home-card-gradient{
+.gradient-card-gradient{
   background: linear-gradient(90deg, hsla(190, 68%, 50%, 1) 0%, hsla(239, 34%, 47%, 1) 100%);
 }
 .App {
@@ -27,18 +27,22 @@ input {
 .content {
   height: 100%;
   background-color: #f1f1f1;
-  margin-top: 55px;
+  margin-top: 40px;
   flex-grow: 1;
-  margin-left: 150px;
+  margin-left: 130px;
   transition: margin-left 0.3s;
 }
 
 .sidebar-open .content {
-  margin-left: 150px;
+  margin-left: 140px;
 }
 
 .sidebar-closed .content {
-  margin-left: 60px;
+  margin-left: 30px;
+}
+
+.sidebar-closed .item-text {
+  display:none !important;
 }
 
 @media (max-width: 768px) {

@@ -47,7 +47,7 @@ const SidebarItem = ({ item, isOpen, onClick, isActive }: props) => {
         </svg>
       </div>
       <p
-        className={`pl-2 text-sm font-medium text-gray-600 transition-opacity duration-300 ${
+        className={`item-text pl-2 text-sm font-medium text-gray-600 transition-opacity duration-300 ${
           isOpen ? "opacity-100" : "opacity-0"
         }`}
       >

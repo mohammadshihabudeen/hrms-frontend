@@ -8,8 +8,8 @@ const RecentActivities: React.FC = () => {
   const activities = useSelector(selectAllActivities);
 
   return (
-    <div className="bg-white p-5 rounded-lg w-4/5 mx-auto shadow-md">
-      <p className="text-gray-800 text-sm border-b-2 border-gray-200 pb-2 mb-4">
+    <div className="bg-white p-5 py-4 rounded-2xl w-4/5 mx-auto shadow-2xl">
+      <p className="text-gray-800 text-sm border-b-2 border-gray-200 pb-4 mb-3">
         Recent Activities
       </p>
       <ul className="list-none p-0 m-0">
