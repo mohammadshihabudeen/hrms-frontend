@@ -2,8 +2,8 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setLogin, setError } from "../store/slices/loginSlice";
 import { Dispatch } from "redux";
+import { setError, setLogin } from "../store/slices/loginSlice";
 import { RootState } from "../store/store";
 
 export const loginUser =
@@ -41,52 +41,52 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-200">
-      <div className="bg-white p-8 rounded shadow-md max-w-sm w-full">
-        <div className="text-center mb-4">
-          <img src="/assets/Logo.jpg" alt="Logo" className="mx-auto mb-4" />
-          <h1 className="text-xl font-bold">Login</h1>
-        </div>
-        <form onSubmit={formSubmitter}>
-          {errorMessage.length > 0 && (
-            <div className="text-red-500 mb-4">{errorMessage}</div>
-          )}
-          <div className="mb-4">
-            <input
-              type="text"
-              name="email"
-              required
-              onChange={handleChange}
-              placeholder="Email"
-              className="border border-gray-300 px-3 py-2 rounded w-full"
-            />
-          </div>
-          <div className="mb-4">
-            <input
-              type="password"
-              name="password"
-              required
-              onChange={handleChange}
-              placeholder="Password"
-              className="border border-gray-300 px-3 py-2 rounded w-full"
-            />
-          </div>
-          <div className="mb-6">
-            <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full"
-            >
-              Login
-            </button>
-          </div>
-          <div className="text-center">
-            <a href="#" className="text-blue-500">
-              Forgot password?
-            </a>
-          </div>
-        </form>
-      </div>
+    <div className="background_image flex items-center justify-center min-h-screen bg-gray-200">
+  <div className="login_box relative p-10 bg-white shadow-lg rounded-2xl max-w-lg">
+    <div className="text-center mb-2">
+      <img src="/assets/Logo.jpg" alt="Logo" className="img mx-auto " />
     </div>
+    <form onSubmit={formSubmitter}>
+      {errorMessage.length > 0 && (
+        <p className="text-red-500  mx-5 p-2">{errorMessage}</p>
+      )}
+      <div className="user_box1 relative mb-4">
+        <input
+          type="text"
+          name="email"
+          required
+          onChange={handleChange}
+          placeholder="Email"
+          className="input w-10/12 py-2 text-lg text-gray-600 mt-5 border-bottom-gray border-b-2 border-gray-300 outline-none mx-8"
+        />
+      </div>
+      <div className="user_box relative mb-5">
+        <input
+          type="password"
+          name="password"
+          required
+          onChange={handleChange}
+          placeholder="Password"
+          className="input w-10/12 py-2 text-lg text-gray-600 mb-3 border-bottom-gray border-b-2 border-gray-300 outline-none mx-8"
+        />
+      </div>
+      <div className="mb-6">
+        <button
+          type="submit"
+          className="login_box_button bg-gradient-to-r from-blue-400 to-blue-700 text-white font-bold py-2 px-8 rounded-full w-1/4 mx-auto "
+        >
+          Login
+        </button>
+      </div>
+      <div className="text-center">
+        <a href="#" className="a text-gray-600 no-underline font-semibold ">
+          Forgot password?
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
   );
 };
 
