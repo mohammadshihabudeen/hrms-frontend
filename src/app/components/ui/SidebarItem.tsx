@@ -17,7 +17,7 @@ const SidebarItem = ({ item, isOpen, onClick, isActive }: props) => {
     <a
       href={`${item.name !== "Logout" ? "/pages/" + item.name : "/"}`}
       onClick={isOpen ? onClick : undefined}
-      className="ps-4 flex items-center p-2 hover:bg-gray-200 relative mb-4"
+      className="ps-5 flex items-center p-2 hover:bg-gray-200 relative mb-4"
     >
       <div className="flex-shrink-0 text-blue-800">
         <svg

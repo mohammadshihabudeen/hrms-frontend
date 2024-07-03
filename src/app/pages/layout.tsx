@@ -11,9 +11,13 @@ export default function RootLayout({
   const sidebarOpen = useSelector((state: RootState) => state.sidebar.isOpen);
   return (
     <div className={`App ${sidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
-      <Header />
-      <SideBar />
-      <main className="content">{children}</main>
+      <div className="app-container">
+        <Header />
+        <div className="main-container">
+          <SideBar />
+          <main className="content">{children}</main>
+        </div>
+      </div>
     </div>
   );
 }

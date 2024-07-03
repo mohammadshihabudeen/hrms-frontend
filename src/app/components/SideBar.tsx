@@ -14,7 +14,7 @@ const SideBar: React.FC = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 h-full transition-width duration-300 bg-white shadow-lg pt-14 ${
+      className={`fixed top-0 left-0 h-full transition-width duration-300 bg-white shadow-lg pt-20 md:pt-16 ${
         isOpen ? "w-40" : "w-16"
       }`}
     >

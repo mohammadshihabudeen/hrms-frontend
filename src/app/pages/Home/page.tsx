@@ -7,7 +7,7 @@ import { LuClipboardCheck } from "react-icons/lu";
 const Home: React.FC = () => {
   return (
     <div className="container mx-auto p-4">
-      <div className="flex justify-around">
+      <div className="flex flex-wrap justify-around gap-4">
         <HomeCard
           name={"Employees"}
           count={1000}
