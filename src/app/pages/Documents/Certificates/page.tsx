@@ -1,17 +1,17 @@
 // pages/Certificates.tsx
 
 "use client";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useRouter } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../../../store/store";
 import { FaArrowLeft } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addCertificate,
   deleteCertificate,
 } from "../../../store/slices/certificateSlice";
+import { AppDispatch, RootState } from "../../../store/store";
 
 interface Certificate {
   id: number;
@@ -19,7 +19,7 @@ interface Certificate {
   startDate: string;
   endDate: string;
   courseProvider: string;
-  document: string | null;
+  document: any | null;
 }
 
 interface CertificateDetailProps {
@@ -142,13 +142,9 @@ const Certificates: React.FC = () => {
 
   return (
     <div className="container mx-auto mt-4 ms-5 p-4">
-      <button
-        className="flex items-center mb-4 ms-5 px-4 py-2 bg-blue-600 text-white rounded"
-        onClick={handleBack}
-      >
-        <FaArrowLeft />
-        <span className="px-2">Back</span>
-      </button>
+        <button className="backButton1  px-3 py-1 rounded text-sm flex items-center" onClick={handleBack}>
+                <FaArrowLeft className="mr-1" /> Back
+            </button>
       <h1 className="ms-5 text-2xl font-bold mb-4">Certificate Details</h1>
       <button
         className="ms-10 px-4 py-2 my-2 bg-yellow-500 text-white rounded cursor-pointer"
