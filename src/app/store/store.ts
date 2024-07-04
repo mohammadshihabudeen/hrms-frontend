@@ -6,6 +6,7 @@ import activitiesReducer from "./slices/activitiesSlice";
 import educationReducer from "./slices/educationSlice";
 import experienceReducer from "./slices/experienceSlice";
 import certificateReducer from "./slices/certificateSlice";
+import attendanceReducer from "./slices/attendanceSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     education: educationReducer,
     experience: experienceReducer,
     certificates: certificateReducer,
+    attendance: attendanceReducer,
   },
 });
 

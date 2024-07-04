@@ -12,11 +12,11 @@ const Home: React.FC = () => {
           name={"Employees"}
           count={1000}
           icon={<FaUsers className="h-12 w-12 text-white" />}
-          link={"#"}
+          link={"Employees"}
         />
         <GradientCard
           name={"Tasks"}
-          count={50}
+          count={0}
           icon={<LuClipboardCheck className="h-12 w-12 text-white" />}
           link={"#"}
         />
@@ -24,7 +24,7 @@ const Home: React.FC = () => {
           name={"Reports"}
           count={1500}
           icon={<FaRegEdit className="h-12 w-12 text-white" />}
-          link={"#"}
+          link={"Reports"}
         />
       </div>
       <RecentActivities />
