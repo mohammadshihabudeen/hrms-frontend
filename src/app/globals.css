@@ -42,7 +42,7 @@ input {
 }
 
 .sidebar-closed .item-text {
-  display:none !important;
+  visibility: hidden !important;
 }
 
 @media (max-width: 768px) {
