@@ -72,14 +72,14 @@ input {
 .input {
   width: 83%;
   padding: 10px 0;
-  font-size: 17px;
+  font-size: 16px;
   color: #525252;
   /* margin-bottom: 30px; */
   border: none;
   border-bottom: 2px solid #cbcbcb;
   outline: none;
   margin-left: 30px;
-  font-weight: 600;
+  font-weight: 500;
 
 }
 
@@ -128,36 +128,507 @@ input {
   z-index: -1;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 412px) {
+
   .login_box {
-    width: 50%;
-  }
-  .img {
     width: 90%;
-    height: 70%;
+    height: auto;
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  .input {
+    width: calc(100% - 40px);
     margin-left: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+  }
+
+  .login_box_button {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 20px;
+  }
+
+  .img {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: -20px;
   }
-  .login_box_button {
-    width: 25%;
-    height: 30px;
-    margin-left: 70px;
+  .background_image {
+    background-image: url('../../public/assets/new_file.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: -1;
   }
-  .a {
-    margin-left: 45px;
-  }
-}
-.tableContainer::-webkit-scrollbar {
-  width: 8px;
 }
 
-.tableContainer::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
+@media (max-width: 768px) {
+
+  .searchIcon {
+      font-size: 14px;
+      
+  }
+
+  .table {
+      width: 90%;
+  }
+
+  .table thead {
+      display: none;
+      /* Hide the header on smaller screens */
+  }
+
+  .table tbody>tr {
+      display: block;
+      margin-bottom: 20px;
+      /* Add space between rows */
+      border-radius: 10px;
+      /* Ensure rows have rounded corners on small screens */
+  }
+
+  .table tbody>tr td {
+      display: block;
+      text-align: right;
+      padding-left: 50%;
+      position: relative;
+      padding: 10px 5px;
+      border-radius: 0;
+      /* Remove border-radius for individual cells */
+  }
+
+  .table tbody>tr td:first-child {
+      text-align: left;
+      padding-left: 10px;
+  }
+
+  .table tbody>tr td:before {
+      content: attr(data-label);
+      position: absolute;
+      left: 10px;
+      width: 50%;
+      padding-right: 10px;
+      white-space: nowrap;
+      text-align: left;
+      font-weight: bold;
+  }
+
+  .table tbody>tr td:first-child:before {
+      display: none;
+      
+  }
+
+  .profile {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+  }
+
+  .line {
+      display: none !important;
+  }
 }
 
-.tableContainer::-webkit-scrollbar-thumb:hover {
-  background: #555;
+@media (max-width: 480px) {
+  .search {
+      width: 95%;
+  }
+
+  .searchbar {
+      font-size: 12px;
+      padding: 8px;
+      padding-left: 30px;
+  }
+
+  .searchIcon {
+      font-size: 12px;
+      margin-left: 40px;
+  }
+
+  .table {
+      width: 95%;
+  }
+
+  .table tbody>tr td {
+      font-size: 12px;
+  }
+
+  .profile {
+      width: 25px;
+      height: 25px;
+  }
+}
+
+
+/* Employee Table Style Start*/
+
+
+.search {
+  position: relative;
+  width: 80%;
+  margin: 50px auto;
   
 }
+
+.searchbar {
+  width: 100%;
+  padding: 15px;
+  background-color: rgba(172, 229, 241, 0.447);
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #313131;
+  padding-left: 40px;
+}
+
+.searchIcon {
+  color: #5c5c5c;
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+  font-size: 17px;
+}
+
+.table tbody>tr:nth-of-type(odd) {
+  background: rgba(188, 244, 255, 0.25);
+}
+
+.table tbody>tr:nth-of-type(even) {
+  background: rgba(172, 174, 255, 0.15);
+}
+
+.table tbody>tr td {
+  padding: 15px;
+  vertical-align: middle;
+  position: relative;
+}
+
+.ename
+{
+  color: #8c8c8c;
+}
+
+.jt {
+  color: black;
+  font-weight: bold;
+}
+
+.salary {
+  color: rgb(51, 184, 255);
+}
+
+.hd {
+  color: #8c8c8c;
+}
+
+
+.line {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  height: 22px;
+  width: 2px;
+  background-color: #919191;
+  transform: translateY(-50%);
+}
+
+td:not(:last-child) .line {
+  display: block;
+}
+
+td:last-child .line {
+  display: none;
+}
+
+
+/* Employee Table Style End */
+
+
+/* EmployeeDetails Style Start */
+
+.card {
+  width: 200%;
+  height: 40%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-left: 130px;
+}
+
+.card_header {
+  background: linear-gradient(90deg, hsla(190, 68%, 50%, 1) 0%, hsla(239, 34%, 47%, 1) 100%);    color: #fff;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  padding-left: 40px;
+  width: 100%;
+}
+.card_content
+{
+  margin-left: 50px;
+}
+.icon1
+{
+  margin-left: 60px;
+}
+.text1
+{
+  margin-left: 80px;
+  gap: 10px;
+  text-align: right;
+}
+.card1 {
+  width: 100%;
+  height: 120%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-left: 130px;
+}
+.ic
+{
+  color: #274bc2;
+}
+.data
+{
+  margin-left: 50px;
+  font-weight: bold;
+}
+.data1
+{
+  margin-left: 25px;
+  font-weight: bold;
+}
+.einput
+{
+  width: 250px;
+  /* margin-left: 50px; */
+}
+.pencil
+{
+  margin-right: 50px;
+}
+.backButton
+{
+    margin-left: 70px;
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    background: transparent;
+    transition: color 0.3s ease-in-out;
+    color: #585858;
+    cursor: pointer;
+}
+.backButton:hover{
+  color: rgb(0, 0, 0);
+}
+
+/* Responsive styles */
+@media (max-width: 780px) {
+  .card,
+  .card1 {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+
+  .card_content,
+  .data,
+  .data1,
+  .backButton {
+    margin-left: 20px;
+  }
+
+  .einput {
+    width: 100%;
+  }
+
+  .pencil {
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: 460px) {
+  .card
+   {
+    width: 260px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+    height: 100%;
+ 
+
+  }
+  .card1 {
+    width: 260px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+    height: 80%;
+ 
+
+  }
+.backButton{
+  margin-left: 50px;
+
+}
+  .card_content {
+    margin-left: -155px;
+    display: grid;
+    grid-template-columns:250px;
+    margin-top: 50px;
+  }
+
+  .Eimg
+  {
+    margin-top: -15px;
+    width: 60px;
+    height: 60px;
+    margin-left: 90px;
+  }
+  .pinput
+  {
+    width: 85%;
+  }
+
+  .einput {
+    width: 55%;
+  }
+
+  .pencil {
+    margin-right: 20px;
+  }
+
+  .card_header {
+    padding-left: 20px;
+  }
+  .card_content
+  {
+    grid-row: auto;
+  }
+  .card_content1 {
+    display: grid;
+    grid-template-columns:350px ;
+    row-gap: 0;
+    
+  }
+  .data
+  {
+    margin-left: -70px;
+    margin-top: 100px;
+  }
+  .data1
+  {
+    margin-left: -90px;
+    margin-top: 80px;
+  }
+  .edname
+  {
+    font-size: 16px;
+  }
+}
+
+/* EmployeeDetails Style End */
+.backButton1
+{
+    margin-left: 20px;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    background: transparent;
+    transition: color 0.3s ease-in-out;
+    color: #585858;
+    cursor: pointer;
+}
+.backButton1:hover{
+  color: rgb(0, 0, 0);
+}
+
+/* Leave Stlyes Start */
+.Lbutton
+{
+  margin-left: 70px;
+}
+.Dinput
+{
+  width: 200%;
+}
+.Sinput
+{
+  width: 92%;
+}
+.Ficon
+{
+  margin-right: 50px;
+}
+.Ccard
+{
+  margin-top: 50px;
+  margin-left: 50px;
+  width: 90%;
+}
+@media (max-width: 780px) {
+  .Lbutton {
+    margin-left: 20px;
+  }
+
+  .Dinput {
+    width: 100%;
+  }
+
+  .Sinput {
+    width: 100%;
+  }
+
+  .Ficon {
+    margin-right: 20px;
+  }
+
+  .Ccard {
+    margin-top: 30px;
+    margin-left: 20px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 460px) {
+  .Lbutton {
+    margin-left: 10px;
+  }
+
+  .Dinput {
+    width: 100%;
+  }
+
+  .Sinput {
+    width: 100%;
+  }
+
+  .Ficon {
+    margin-right: 5px;
+  }
+
+  .Ccard {
+    margin-top: 20px;
+    margin-left: 24px;
+    width: 90%;
+    display:grid;
+    grid-template-columns: 280px;
+  }
+}
+/* Leave Stlyes Start */
+

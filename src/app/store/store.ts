@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
+import activitiesReducer from "./slices/activitiesSlice";
+import attendanceReducer from "./slices/attendanceSlice";
+import certificateReducer from "./slices/certificateSlice";
+import educationReducer from "./slices/educationSlice";
+import employeeSlice from "./slices/employeeSlice";
+import experienceReducer from "./slices/experienceSlice";
+import loginReducer from "./slices/loginSlice";
 import sidebarReducer from "./slices/sidebarSlice";
 import userReducer from "./slices/userSlice";
-import loginReducer from "./slices/loginSlice";
-import activitiesReducer from "./slices/activitiesSlice";
-import educationReducer from "./slices/educationSlice";
-import experienceReducer from "./slices/experienceSlice";
-import certificateReducer from "./slices/certificateSlice";
-import attendanceReducer from "./slices/attendanceSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     experience: experienceReducer,
     certificates: certificateReducer,
     attendance: attendanceReducer,
+    employees: employeeSlice,
   },
 });
 
