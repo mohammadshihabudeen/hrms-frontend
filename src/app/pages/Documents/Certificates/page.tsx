@@ -2,14 +2,15 @@
 
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaArrowLeft } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addCertificate,
-  deleteCertificate,
+  fetchCertificates,
+  addNewCertificate,
+  removeCertificate,
 } from "../../../store/slices/certificateSlice";
 import { AppDispatch, RootState } from "../../../store/store";
 
@@ -19,7 +20,7 @@ interface Certificate {
   startDate: string;
   endDate: string;
   courseProvider: string;
-  document: any | null;
+  document: any;
 }
 
 interface CertificateDetailProps {
@@ -66,8 +67,14 @@ const Certificates: React.FC = () => {
   const certificates = useSelector(
     (state: RootState) => state.certificates.certificates
   );
+  const loading = useSelector((state: RootState) => state.certificates.loading);
+  const error1 = useSelector((state: RootState) => state.certificates.error);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+
+  useEffect(() => {
+    dispatch(fetchCertificates());
+  }, [dispatch]);
 
   const [form, setForm] = useState({
     courseTitle: "",
@@ -77,7 +84,7 @@ const Certificates: React.FC = () => {
     document: null as string | null,
   });
   const [isAdding, setIsAdding] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(error1);
 
   const handleEdit = (file: File) => {
     if (file) {
@@ -120,7 +127,7 @@ const Certificates: React.FC = () => {
       document: form.document,
     };
 
-    dispatch(addCertificate(newCertificate));
+    dispatch(addNewCertificate(newCertificate));
     setForm({
       courseTitle: "",
       startDate: null,
@@ -133,7 +140,7 @@ const Certificates: React.FC = () => {
   };
 
   const handleDeleteCertificate = (id: number) => {
-    dispatch(deleteCertificate(id));
+    dispatch(removeCertificate(id));
   };
 
   const handleBack = () => {
@@ -142,9 +149,12 @@ const Certificates: React.FC = () => {
 
   return (
     <div className="container mx-auto mt-4 ms-5 p-4">
-        <button className="backButton1  px-3 py-1 rounded text-sm flex items-center" onClick={handleBack}>
-                <FaArrowLeft className="mr-1" /> Back
-            </button>
+      <button
+        className="backButton1  px-3 py-1 rounded text-sm flex items-center"
+        onClick={handleBack}
+      >
+        <FaArrowLeft className="mr-1" /> Back
+      </button>
       <h1 className="ms-5 text-2xl font-bold mb-4">Certificate Details</h1>
       <button
         className="ms-10 px-4 py-2 my-2 bg-yellow-500 text-white rounded cursor-pointer"
