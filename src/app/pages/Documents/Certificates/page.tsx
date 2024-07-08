@@ -19,7 +19,7 @@ interface Certificate {
   startDate: string;
   endDate: string;
   courseProvider: string;
-  document: any | null;
+  document: any;
 }
 
 interface CertificateDetailProps {
@@ -142,9 +142,12 @@ const Certificates: React.FC = () => {
 
   return (
     <div className="container mx-auto mt-4 ms-5 p-4">
-        <button className="backButton1  px-3 py-1 rounded text-sm flex items-center" onClick={handleBack}>
-                <FaArrowLeft className="mr-1" /> Back
-            </button>
+      <button
+        className="backButton1  px-3 py-1 rounded text-sm flex items-center"
+        onClick={handleBack}
+      >
+        <FaArrowLeft className="mr-1" /> Back
+      </button>
       <h1 className="ms-5 text-2xl font-bold mb-4">Certificate Details</h1>
       <button
         className="ms-10 px-4 py-2 my-2 bg-yellow-500 text-white rounded cursor-pointer"
