@@ -1,15 +1,17 @@
 import React, { useState } from "react";
+import DocumentUploadButton from "./ui/buttons/DocumentUploadButton";
+import DocumentViewButton from "./ui/buttons/DocumentViewButton";
 interface EducationDetailProps {
   level: string;
   certificate: string | null;
   onEdit: (file: File) => void;
 }
 
-const EducationDetail: React.FC<EducationDetailProps> = ({
+const EducationDetail = ({
   level,
   certificate,
   onEdit,
-}) => {
+}: EducationDetailProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEdit = (file: File) => {
@@ -28,22 +30,18 @@ const EducationDetail: React.FC<EducationDetailProps> = ({
       ) : (
         <div className="flex justify-between align-items-center">
           {certificate ? (
-            <button
-              className="px-4 mr-8 py-2 my-2 bg-blue-600 text-white rounded cursor-pointer"
-              onClick={() => window.open(certificate)}
-              disabled={!certificate}
-            >
-              View
-            </button>
+            <DocumentViewButton
+              clickHandler={() => window.open(certificate)}
+              isDisabled={!certificate}
+              text="View"
+            />
           ) : (
             <p className="text-white text-sm">Upload documents to view</p>
           )}
-          <button
-            className="px-4 py-2 my-2 bg-green-600 text-white rounded cursor-pointer"
-            onClick={() => setIsEditing(true)}
-          >
-            Upload
-          </button>
+          <DocumentUploadButton
+            clickHandler={() => setIsEditing(true)}
+            text="Upload"
+          />
         </div>
       )}
     </div>

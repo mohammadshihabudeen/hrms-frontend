@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import ChangePasswordButton from "./buttons/ChangePasswordButton";
 
 const UserCard: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -23,12 +24,10 @@ const UserCard: React.FC = () => {
           <p className="text-sm text-gray-500">{user.position}</p>
         </div>
       </div>
-      <button
-        className="w-auto bg-blue-500 text-white py-2 px-4 rounded "
-        onClick={handleChangePassword}
-      >
-        Change Password
-      </button>
+      <ChangePasswordButton
+        clickHandler={handleChangePassword}
+        text="Change Password"
+      />
     </div>
   );
 };

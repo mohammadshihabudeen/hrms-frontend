@@ -1,11 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { FaArrowLeft } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import EducationDetail from "../../../components/EducationDetail";
 import { updateDetail } from "../../../store/slices/educationSlice";
 import { RootState } from "../../../store/store";
+import DocumentsBackButton from "@/app/components/ui/buttons/DocumentsBackButton";
+
 const Education: React.FC = () => {
   const details = useSelector((state: RootState) => state.education.details);
   const dispatch = useDispatch();
@@ -22,9 +23,7 @@ const Education: React.FC = () => {
 
   return (
     <div className="container mx-auto mt-4 ms-5 p-4">
-              <button className="backButton1  px-3 py-1 rounded text-sm flex items-center" onClick={handleBack}>
-                <FaArrowLeft className="mr-1" /> Back
-            </button>
+      <DocumentsBackButton handleClick={handleBack} text="Back" />
       <h1 className="ms-5 text-2xl font-bold mb-4">Education Details</h1>
       <div className="flex flex-wrap justify-around">
         {Object.keys(details).map((level) => (

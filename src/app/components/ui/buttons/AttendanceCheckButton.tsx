@@ -3,7 +3,7 @@ type Props = {
   handleCheckInOut: () => void;
 };
 
-const AttendanceButton = ({ isCheckedIn, handleCheckInOut }: Props) => {
+const AttendanceCheckButton = ({ isCheckedIn, handleCheckInOut }: Props) => {
   return (
     <button
       className={`w-32 h-32 rounded-full text-white text-lg mb-5 transition-colors duration-300 ${
@@ -15,4 +15,4 @@ const AttendanceButton = ({ isCheckedIn, handleCheckInOut }: Props) => {
     </button>
   );
 };
-export default AttendanceButton;
+export default AttendanceCheckButton;
