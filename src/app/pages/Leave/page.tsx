@@ -36,7 +36,6 @@ const Leave: React.FC = () => {
       return;
     }
 
-
     alert("Form submitted successfully!");
     handleReset();
   };
@@ -50,7 +49,7 @@ const Leave: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4 Ccard">
-        <LeaveCard
+      <LeaveCard
         fromDate={fromDate}
         setFromDate={setFromDate}
         toDate={toDate}
@@ -65,6 +64,8 @@ const Leave: React.FC = () => {
         leaveTypes={leaveTypes}
         isLeaveTypeOpen={isLeaveTypeOpen}
         setIsLeaveTypeOpen={setIsLeaveTypeOpen}
+        handleAdd={handleAdd}
+        handleReset={handleReset}
       />
     </div>
   );

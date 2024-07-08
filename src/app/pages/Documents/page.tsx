@@ -2,7 +2,7 @@ import React from "react";
 import { IoSchool } from "react-icons/io5";
 import { FaBusinessTime } from "react-icons/fa";
 import { PiCertificateFill } from "react-icons/pi";
-import GradientCard from "@/app/components/ui/GradientCard";
+import GradientCard from "@/app/components/ui/cards/GradientCard";
 const Documents = () => {
   return (
     <div className="container mx-auto p-4">

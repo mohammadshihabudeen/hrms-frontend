@@ -4,7 +4,7 @@ import { FaBell, FaSearch } from "react-icons/fa";
 import { IoMdMailUnread } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import UserCard from "../components/ui/UserCard";
+import UserCard from "./ui/cards/UserCard";
 import HeaderUserButton from "./ui/buttons/HeaderUserButton";
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

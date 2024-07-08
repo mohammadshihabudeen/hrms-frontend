@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import ChangePasswordButton from "./buttons/ChangePasswordButton";
+import { RootState } from "../../../store/store";
+import ChangePasswordButton from "../buttons/ChangePasswordButton";
 
 const UserCard: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
