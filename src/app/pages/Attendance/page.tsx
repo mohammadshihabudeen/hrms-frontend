@@ -32,9 +32,7 @@ export default function Attendance() {
   const handleMonthSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const [year, month] = event.target.value.split("-");
     dispatch(
-      setSelectedMonth(
-        new Date(Number(year), Number(month) - 1).toISOString()
-      )
+      setSelectedMonth(new Date(Number(year), Number(month) - 1).toISOString())
     );
   };
 
@@ -65,6 +63,8 @@ export default function Attendance() {
         filteredAttendance={filteredAttendance}
         selectedDate={selectedDate}
         handleMonthSelect={handleMonthSelect}
+        handleCurrentMonth={handleCurrentMonth}
+        handlePreviousMonth={handlePreviousMonth}
       />
     </div>
   );
