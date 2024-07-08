@@ -13,6 +13,8 @@ import {
   removeCertificate,
 } from "../../../store/slices/certificateSlice";
 import { AppDispatch, RootState } from "../../../store/store";
+import DocumentSubmitButton from "@/app/components/ui/buttons/DocumentSubmitButton";
+import DocumentAddButton from "@/app/components/ui/buttons/DocumentAddButton";
 
 interface Certificate {
   id: number;
@@ -99,7 +101,7 @@ const Certificates: React.FC = () => {
   };
 
   const handleAddCertificate = () => {
-    setIsAdding(true);
+    setIsAdding(!isAdding);
   };
 
   const handleSubmit = () => {
@@ -156,12 +158,10 @@ const Certificates: React.FC = () => {
         <FaArrowLeft className="mr-1" /> Back
       </button>
       <h1 className="ms-5 text-2xl font-bold mb-4">Certificate Details</h1>
-      <button
-        className="ms-10 px-4 py-2 my-2 bg-yellow-500 text-white rounded cursor-pointer"
-        onClick={handleAddCertificate}
-      >
-        Add Certificate
-      </button>
+      <DocumentAddButton
+        handleClick={handleAddCertificate}
+        text="Add Certificate"
+      />
       {isAdding && (
         <div className="bg-white p-4 rounded-lg shadow-lg mb-4 m-10 w-auto md:w-96">
           <div className="mb-4">
@@ -214,12 +214,7 @@ const Certificates: React.FC = () => {
               className="w-full px-3 py-2 border rounded"
             />
           </div>
-          <button
-            className="px-4 py-2 bg-green-600 text-white rounded"
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
+          <DocumentSubmitButton handleClick={handleSubmit} text="Submit" />
           {error && <p className="text-red-500 mt-2">{error}</p>}
         </div>
       )}

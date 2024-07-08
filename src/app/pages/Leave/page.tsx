@@ -1,4 +1,6 @@
 "use client";
+import LeaveApplyButton from "@/app/components/ui/buttons/LeaveApplyButton";
+import LeaveResetButton from "@/app/components/ui/buttons/LeaveResetButton";
 import React, { useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -184,19 +186,8 @@ const Leave: React.FC = () => {
           />
         </div>
         <div className="flex items-center ">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Apply
-          </button>
-          <button
-            type="button"
-            onClick={handleReset}
-            className="Lbutton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Reset
-          </button>
+          <LeaveApplyButton text="Apply" />
+          <LeaveResetButton handleClick={handleReset} text="Reset" />
         </div>
       </form>
     </div>
