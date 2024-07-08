@@ -2,14 +2,15 @@
 
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaArrowLeft } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addCertificate,
-  deleteCertificate,
+  fetchCertificates,
+  addNewCertificate,
+  removeCertificate,
 } from "../../../store/slices/certificateSlice";
 import { AppDispatch, RootState } from "../../../store/store";
 
@@ -66,8 +67,14 @@ const Certificates: React.FC = () => {
   const certificates = useSelector(
     (state: RootState) => state.certificates.certificates
   );
+  const loading = useSelector((state: RootState) => state.certificates.loading);
+  const error1 = useSelector((state: RootState) => state.certificates.error);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+
+  useEffect(() => {
+    dispatch(fetchCertificates());
+  }, [dispatch]);
 
   const [form, setForm] = useState({
     courseTitle: "",
@@ -77,7 +84,7 @@ const Certificates: React.FC = () => {
     document: null as string | null,
   });
   const [isAdding, setIsAdding] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(error1);
 
   const handleEdit = (file: File) => {
     if (file) {
@@ -120,7 +127,7 @@ const Certificates: React.FC = () => {
       document: form.document,
     };
 
-    dispatch(addCertificate(newCertificate));
+    dispatch(addNewCertificate(newCertificate));
     setForm({
       courseTitle: "",
       startDate: null,
@@ -133,7 +140,7 @@ const Certificates: React.FC = () => {
   };
 
   const handleDeleteCertificate = (id: number) => {
-    dispatch(deleteCertificate(id));
+    dispatch(removeCertificate(id));
   };
 
   const handleBack = () => {
