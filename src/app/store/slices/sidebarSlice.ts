@@ -1,16 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface SidebarState {
-  isOpen: boolean;
-  elements: {
-    id: number;
-    name: string;
-    active: boolean;
-    viewBox: string;
-    svgPath: string[];
-  }[];
-}
-
 const initialState: SidebarState = {
   isOpen: false,
   elements: [

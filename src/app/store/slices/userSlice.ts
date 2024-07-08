@@ -1,11 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface UserState {
-  profileImage: string;
-  name: string;
-  position: string;
-}
-
 const initialState: UserState = {
   profileImage: "/assets/user.jpg",
   name: "Saravanan",

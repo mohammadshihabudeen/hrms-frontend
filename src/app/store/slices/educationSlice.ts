@@ -1,9 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface EducationState {
-  details: { [key: string]: string | null };
-}
-
 const initialState: EducationState = {
   details: {
     "10th std Documents": null,

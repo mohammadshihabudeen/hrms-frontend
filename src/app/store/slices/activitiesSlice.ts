@@ -1,16 +1,6 @@
 // slices/activitiesSlice.ts
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-interface Activity {
-  id: number;
-  user: string;
-  action: string;
-  time: string;
-}
-
-interface ActivitiesState {
-  activities: Activity[];
-}
 
 const initialState: ActivitiesState = {
   activities: [
