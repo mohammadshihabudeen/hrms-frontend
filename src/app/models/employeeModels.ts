@@ -22,5 +22,4 @@ interface empdetails {
   name: string;
   icon: JSX.Element;
   value: string;
-}
-[];
+};
