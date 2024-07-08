@@ -7,6 +7,7 @@ import {
   setSelectedMonth,
 } from "../../store/slices/attendanceSlice";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import AttendanceButton from "@/app/components/ui/buttons/AttendanceButton";
 
 export default function Attendance() {
   const dispatch = useDispatch<AppDispatch>();
@@ -53,14 +54,10 @@ export default function Attendance() {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   return (
     <div className="flex flex-col items-center p-5 bg-gray-100 min-h-screen">
-      <button
-        className={`w-32 h-32 rounded-full text-white text-lg mb-5 transition-colors duration-300 ${
-          isCheckedIn ? "bg-blue-700" : "bg-blue-500"
-        }`}
-        onClick={handleCheckInOut}
-      >
-        {isCheckedIn ? "CHECK OUT" : "CHECK IN"}
-      </button>
+      <AttendanceButton
+        isCheckedIn={isCheckedIn}
+        handleCheckInOut={handleCheckInOut}
+      />
 
       <div className="tableContainer overflow-y-auto w-4/5 h-80 bg-gray-200 rounded-2xl shadow-2xl mb-5">
         {filteredAttendance.length > 0 ? (
