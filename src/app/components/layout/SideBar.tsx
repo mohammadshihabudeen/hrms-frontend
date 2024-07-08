@@ -2,10 +2,10 @@
 import { FaBars } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { toggleSidebar } from "../store/slices/sidebarSlice";
+import { RootState } from "../../store/store";
+import { toggleSidebar } from "../../store/slices/sidebarSlice";
 import { usePathname } from "next/navigation";
-import SidebarItem from "./ui/SidebarItem";
+import SidebarItem from "./../ui/SidebarItem";
 const SideBar: React.FC = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.sidebar.isOpen);

@@ -1,6 +1,6 @@
 import React from "react";
 import GradientCard from "../../components/ui/cards/GradientCard";
-import RecentActivities from "../../components/RecentActivities";
+import RecentActivities from "@/app/components/layout/RecentActivities";
 import { FaRegEdit, FaUsers } from "react-icons/fa";
 import { LuClipboardCheck } from "react-icons/lu";
 

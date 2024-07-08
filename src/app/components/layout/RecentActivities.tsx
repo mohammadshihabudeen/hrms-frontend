@@ -2,7 +2,7 @@
 "use client";
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectAllActivities } from "../store/slices/activitiesSlice";
+import { selectAllActivities } from "@/app/store/slices/activitiesSlice";
 
 const RecentActivities: React.FC = () => {
   const activities = useSelector(selectAllActivities);
