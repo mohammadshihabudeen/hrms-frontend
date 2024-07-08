@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import DocumentUploadButton from "./ui/buttons/DocumentUploadButton";
-import DocumentViewButton from "./ui/buttons/DocumentViewButton";
+import { useState } from "react";
+import DocumentUploadButton from "../buttons/DocumentUploadButton";
+import DocumentViewButton from "../buttons/DocumentViewButton";
 interface EducationDetailProps {
   level: string;
   certificate: string | null;

@@ -1,11 +1,11 @@
 "use client";
+import DocumentsBackButton from "@/app/components/ui/buttons/DocumentsBackButton";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import EducationDetail from "../../../components/EducationDetail";
+import EducationDetail from "../../../components/ui/cards/EducationDetail";
 import { updateDetail } from "../../../store/slices/educationSlice";
 import { RootState } from "../../../store/store";
-import DocumentsBackButton from "@/app/components/ui/buttons/DocumentsBackButton";
 
 const Education: React.FC = () => {
   const details = useSelector((state: RootState) => state.education.details);

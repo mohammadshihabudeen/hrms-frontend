@@ -24,7 +24,7 @@ export default function Attendance() {
     newMonth.setMonth(newMonth.getMonth() - 1);
     dispatch(setSelectedMonth(newMonth.toISOString()));
   };
-
+  
   const handleCurrentMonth = () => {
     dispatch(setSelectedMonth(new Date().toISOString()));
   };
