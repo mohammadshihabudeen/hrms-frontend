@@ -1,71 +1,18 @@
-"use client";
+"use client"
+import DocumentAddButton from "@/app/components/ui/buttons/DocumentAddButton";
+import DocumentsBackButton from "@/app/components/ui/buttons/DocumentsBackButton";
+import DocumentSubmitButton from "@/app/components/ui/buttons/DocumentSubmitButton";
+import { DatePickerInput } from "@/app/components/ui/cards/CertificateDetailsCard";
+import ExperienceCard from "@/app/components/ui/cards/ExperienceCard";
+import { FileInput, Input } from "@/app/components/ui/cards/ExperienceDetails";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { FaArrowLeft } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addExperience,
-  deleteExperience,
-} from "../../../store/slices/experienceSlice";
+import { addExperience, deleteExperience } from "../../../store/slices/experienceSlice";
 import { AppDispatch, RootState } from "../../../store/store";
-import DocumentAddButton from "@/app/components/ui/buttons/DocumentAddButton";
-import DocumentSubmitButton from "@/app/components/ui/buttons/DocumentSubmitButton";
-
-interface Experience {
-  id: number;
-  companyName: string;
-  startDate: string; // Change Date to string
-  endDate: string; // Change Date to string
-  position: string;
-  document: any;
-}
-
-interface ExperienceDetailProps {
-  experience: Experience;
-  onDelete: (id: number) => void;
-}
-
-const ExperienceDetail: React.FC<ExperienceDetailProps> = ({
-  experience,
-  onDelete,
-}) => {
-  return (
-    <div className="relative gradient-card-gradient border border-gray-200 rounded-lg p-4 m-4 w-full sm:w-72 shadow-lg text-white">
-      <h3 className="text-lg font-semibold">
-        Company Name: {experience.companyName}
-      </h3>
-      <p className="mt-2">
-        Duration: {new Date(experience.startDate).toLocaleDateString()} -{" "}
-        {new Date(experience.endDate).toLocaleDateString()}
-      </p>
-      <p className="mt-2">Position: {experience.position}</p>
-      {experience.document ? (
-        <button
-          className="px-4 py-2 my-2 mr-4 bg-blue-600 text-white rounded cursor-pointer"
-          onClick={() => window.open(experience.document)}
-          disabled={!experience.document}
-        >
-          View Document
-        </button>
-      ) : (
-        <p className="mt-2">Upload document to view</p>
-      )}
-      <button
-        className="px-4 py-2 my-2 bg-red-600 text-white rounded cursor-pointer"
-        onClick={() => onDelete(experience.id)}
-      >
-        Delete
-      </button>
-    </div>
-  );
-};
 
 const Experience: React.FC = () => {
-  const experiences = useSelector(
-    (state: RootState) => state.experience.experiences
-  );
+  const experiences = useSelector((state: RootState) => state.experience.experiences);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
@@ -74,17 +21,13 @@ const Experience: React.FC = () => {
     startDate: null as Date | null,
     endDate: null as Date | null,
     position: "",
-    document: null as string | null,
+    document: null as File | null,
   });
   const [isAdding, setIsAdding] = useState(false);
   const [error, setError] = useState("");
 
-  const handleEdit = (file: File) => {
-    if (file) {
-      setForm({ ...form, document: URL.createObjectURL(file) });
-    } else {
-      console.error("No file selected or file type is incorrect");
-    }
+  const handleEdit = (file: File | null) => {
+    setForm({ ...form, document: file });
   };
 
   const handleChange = (field: string, value: any) => {
@@ -96,12 +39,7 @@ const Experience: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    if (
-      !form.companyName ||
-      !form.startDate ||
-      !form.endDate ||
-      !form.position
-    ) {
+    if (!form.companyName || !form.startDate || !form.endDate || !form.position || !form.document) {
       setError("All fields are required");
       return;
     }
@@ -114,8 +52,8 @@ const Experience: React.FC = () => {
     const newExperience = {
       id: experiences.length + 1,
       companyName: form.companyName,
-      startDate: form.startDate ? form.startDate.toISOString() : "", // Convert Date to ISO string
-      endDate: form.endDate ? form.endDate.toISOString() : "", // Convert Date to ISO string
+      startDate: form.startDate ? form.startDate.toISOString() : "",
+      endDate: form.endDate ? form.endDate.toISOString() : "",
       position: form.position,
       document: form.document,
     };
@@ -142,74 +80,39 @@ const Experience: React.FC = () => {
 
   return (
     <div className="container mx-auto mt-4 ms-5 p-4">
-      <button
-        className="backButton1  px-3 py-1 rounded text-sm flex items-center"
-        onClick={handleBack}
-      >
-        <FaArrowLeft className="mr-1" /> Back
-      </button>
+      <DocumentsBackButton handleClick={handleBack} text="Back"/>
       <h1 className="ms-5 text-2xl font-bold mb-4">Experience Details</h1>
-      <DocumentAddButton
-        handleClick={handleAddExperience}
-        text="Add Experience"
-      />
+      <DocumentAddButton handleClick={handleAddExperience} text="Add Experience"/>
       {isAdding && (
         <div className="bg-white p-4 rounded-lg shadow-lg mb-4 m-10 w-auto md:w-96">
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Company Name</label>
-            <input
-              type="text"
-              value={form.companyName}
-              onChange={(e) => handleChange("companyName", e.target.value)}
-              placeholder="Enter company name"
-              className="w-full px-3 py-2 border rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Start Date</label>
-            <DatePicker
-              selected={form.startDate}
-              onChange={(date) => setForm({ ...form, startDate: date })}
-              placeholderText="Select start date"
-              dateFormat="yyyy/MM/dd"
-              className="w-full px-3 py-2 border rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">End Date</label>
-            <DatePicker
-              selected={form.endDate}
-              onChange={(date) => setForm({ ...form, endDate: date })}
-              placeholderText="Select end date"
-              dateFormat="yyyy/MM/dd"
-              className="w-full px-3 py-2 border rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Position</label>
-            <input
-              type="text"
-              value={form.position}
-              onChange={(e) => handleChange("position", e.target.value)}
-              placeholder="Enter position"
-              className="w-full px-3 py-2 border rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">Document</label>
-            <input
-              type="file"
-              onChange={(e: any) => handleEdit(e.target.files?.[0] || null)}
-              className="w-full px-3 py-2 border rounded"
-            />
-          </div>
+          <Input
+            label="Company Name"
+            value={form.companyName}
+            onChange={(value: any) => handleChange("companyName", value)}
+            placeholder="Enter company name"
+          />
+          <DatePickerInput
+            selected={form.startDate}
+            onChange={(date) => setForm({ ...form, startDate: date })}
+            placeholder="Select start date" label={"Start Date"}          />
+          <DatePickerInput
+            selected={form.endDate}
+            onChange={(date) => setForm({ ...form, endDate: date })}
+            placeholder="Select end date" label={"End Date"}          />
+          <Input
+            label="Position"
+            value={form.position}
+            onChange={(value: any) => handleChange("position", value)}
+            placeholder="Enter position"
+          />
+          <FileInput onChange={handleEdit} label={"Documents"} />
           <DocumentSubmitButton handleClick={handleSubmit} text="Submit" />
           {error && <p className="text-red-500 mt-2">{error}</p>}
         </div>
       )}
       <div className="flex flex-wrap justify-around">
-        {experiences.map((experience: any) => (
-          <ExperienceDetail
+        {experiences.map((experience) => (
+          <ExperienceCard
             key={experience.id}
             experience={experience}
             onDelete={handleDeleteExperience}
