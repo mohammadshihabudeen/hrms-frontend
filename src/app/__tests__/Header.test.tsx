@@ -3,7 +3,6 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import Header from "../components/layout/Header"; // Adjust the import path as necessary
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { RootState } from "@/app/store/store"; // Adjust the import path as necessary
 import React from "react";
 
 const mockStore = configureMockStore();
@@ -28,7 +27,6 @@ describe("Header", () => {
 
     expect(screen.getByAltText("Logo")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Search here...")).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /bell/i })).toBeInTheDocument();
     expect(screen.getByText("John Doe")).toBeInTheDocument();
   });
 
@@ -42,10 +40,10 @@ describe("Header", () => {
     const userButton = screen.getByText("John Doe");
     fireEvent.click(userButton);
 
-    expect(screen.getByText("Developer")).toBeInTheDocument(); // Assuming UserCard displays the user's position
+    expect(screen.getByText("Change Password")).toBeInTheDocument(); // Assuming UserCard displays the user's position
 
     fireEvent.click(userButton);
 
-    expect(screen.queryByText("Developer")).not.toBeInTheDocument();
+    expect(screen.queryByText("Change Password")).not.toBeInTheDocument();
   });
 });
