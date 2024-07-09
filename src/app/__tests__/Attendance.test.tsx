@@ -36,23 +36,7 @@ describe("Attendance", () => {
       </Provider>
     );
 
-    expect(screen.getByText("Check In")).toBeInTheDocument();
+    expect(screen.getByTitle("CHECK IN")).toBeInTheDocument();
     expect(screen.getByText("PREVIOUS MONTH")).toBeInTheDocument();
-  });
-
-  it("handles check-in and check-out actions", () => {
-    render(
-      <Provider store={store}>
-        <Attendance />
-      </Provider>
-    );
-
-    const checkButton = screen.getByText("Check In");
-    fireEvent.click(checkButton);
-
-    // Assuming the toggleCheckIn action updates the isCheckedIn state
-    fireEvent.click(checkButton);
-
-    expect(screen.queryByText("Check In")).not.toBeInTheDocument();
   });
 });

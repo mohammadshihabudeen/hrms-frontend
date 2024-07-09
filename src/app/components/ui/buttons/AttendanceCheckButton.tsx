@@ -1,3 +1,4 @@
+import React from "react";
 type Props = {
   isCheckedIn: boolean;
   handleCheckInOut: () => void;
@@ -10,6 +11,7 @@ const AttendanceCheckButton = ({ isCheckedIn, handleCheckInOut }: Props) => {
         isCheckedIn ? "bg-blue-700" : "bg-blue-500"
       }`}
       onClick={handleCheckInOut}
+      title={isCheckedIn ? "CHECK OUT" : "CHECK IN"}
     >
       {isCheckedIn ? "CHECK OUT" : "CHECK IN"}
     </button>
