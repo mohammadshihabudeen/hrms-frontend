@@ -4,7 +4,7 @@ import { PersonelDetailCard } from "@/app/components/ui/cards/PersonelDetailCard
 import { updateEmployee } from "@/app/store/slices/employeeSlice";
 import { RootState } from "@/app/store/store";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import {
     FaArrowLeft,
     FaBirthdayCake,
