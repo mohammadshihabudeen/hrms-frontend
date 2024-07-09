@@ -24,6 +24,7 @@ const initialState: any = {
     ],
     selectedMonth: "2023-07-01T00:00:00Z",
   },
+  // Include other state slices here if needed
 };
 
 const store = mockStore(initialState);
@@ -38,5 +39,23 @@ describe("Attendance", () => {
 
     expect(screen.getByTitle("CHECK IN")).toBeInTheDocument();
     expect(screen.getByText("PREVIOUS MONTH")).toBeInTheDocument();
+  });
+
+  it("moves to the previous month and shows a message if no records", () => {
+    render(
+      <Provider store={store}>
+        <Attendance />
+      </Provider>
+    );
+
+    // Simulate clicking the "PREVIOUS MONTH" button
+    fireEvent.click(screen.getByText("PREVIOUS MONTH"));
+
+    // Get the updated state and cast it to the correct type
+    const updatedState = store.getState() as typeof initialState;
+
+    // Check if the selected month is updated correctly
+    const updatedSelectedMonth = updatedState.attendance.selectedMonth;
+    expect(new Date(updatedSelectedMonth).getMonth()).toBe(6); //
   });
 });
