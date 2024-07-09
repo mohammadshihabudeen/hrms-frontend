@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import EmployeeDetail from "../pages/Employees/Details/[id]/page"; // Adjust the import path as per your project structure
+import EmployeeDetail from "../pages/Employees/Details/[id]/page";
 
 
 jest.mock("next/navigation", () => ({
@@ -40,35 +40,35 @@ describe("EmployeeDetail", () => {
             sidebar: {
                 isOpen: false,
                 elements: []
-            }, // Mock the sidebar state if needed
+            },
             user: {
                 profileImage: "",
                 name: "",
                 position: ""
-            }, // Mock the user state if needed
+            },
             login: {
                 isLoggedIn: false,
                 errorMessage: ""
-            }, // Mock the login state if needed
+            },
             activities: {
                 activities: []
-            }, // Mock the activities state if needed
+            },
             education: {
                 details: {}
-            }, // Mock the education state if needed
+            },
             experience: {
                 experiences: []
-            }, // Mock the experience state if needed
+            },
             certificates: {
                 certificates: [],
                 loading: false,
                 error: null
-            }, // Mock the certificates state if needed
+            },
             attendance: {
                 isCheckedIn: false,
                 attendance: [],
                 selectedMonth: ""
-            }, // Mock the attendance state if needed
+            },
             employees: {
                 employees: mockedEmployees,
                 selectedEmployeeId: "1",
