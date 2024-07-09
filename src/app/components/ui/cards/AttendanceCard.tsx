@@ -9,7 +9,7 @@ interface AttendanceCardProps {
     checkOutTimes: string[];
   }[];
   selectedDate: Date;
-  handleMonthSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleMonthSelect: any;
   handleCurrentMonth: any;
   handlePreviousMonth: any;
 }
@@ -76,6 +76,7 @@ const AttendanceCard: React.FC<AttendanceCardProps> = ({
           selectedDate={selectedDate}
         />
         <input
+          title="inputBox"
           type="month"
           className="px-4 py-2 rounded bg-white mb-2 md:mb-0"
           onChange={handleMonthSelect}
