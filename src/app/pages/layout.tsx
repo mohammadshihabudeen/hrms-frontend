@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import SideBar from "../components/layout/SideBar"; // Adjust the path as necessary
 import Header from "../components/layout/Header";
 import { useSelector } from "react-redux";
