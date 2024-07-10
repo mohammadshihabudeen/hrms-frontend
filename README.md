@@ -2,6 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+npx jest AttendanceCard.test.tsx for testing particular suite
 First, run the development server:
 
 ```bash
