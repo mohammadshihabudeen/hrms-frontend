@@ -1,34 +1,106 @@
 "use client";
+import React, { ChangeEvent, useState, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
+import {
+  addEmployee,
+  fetchEmployees,
+  fetchDefaults,
+} from "@/app/services/employeeService";
 import EmployeeSearchBar from "@/app/components/ui/cards/EmployeeSearch";
 import EmployeeTableRow from "@/app/components/ui/cards/EmployeeTableRow";
-import { RootState } from "@/app/store/store";
-import React, { ChangeEvent, useState } from "react";
-import { useSelector } from "react-redux";
+import EmployeeAddCard from "@/app/components/ui/cards/EmployeeAddCard";
+import { v4 as uuidv4 } from "uuid";
 
 const EmployeeTable: React.FC = () => {
-  const employees = useSelector(
-    (state: RootState) => state.employees.employees
-  );
+  const uniqueId = uuidv4();
+  const dispatch = useAppDispatch();
+  const [defaults, setDefaults] = useState<any>({});
 
+  useEffect(() => {
+    dispatch(fetchEmployees());
+    dispatch(fetchDefaults()).then((action) => {
+      if (fetchDefaults.fulfilled.match(action)) {
+        setDefaults(action.payload);
+      }
+    });
+  }, [dispatch]);
+
+  const employees = useAppSelector((state) => state.employees.employees);
   const [searchQuery, setSearchQuery] = useState<string>("");
-
+  const [isAddingEmployee, setIsAddingEmployee] = useState<boolean>(false);
+  const [newEmployee, setNewEmployee] = useState<Employee>({
+    id: "",
+    employeeName: "",
+    profile: "/assets/profile.svg",
+    jobTitle: "",
+    jobRole: "",
+    salary: "",
+    hireDate: "",
+    contract: "",
+    maritalStatus: "",
+    degree: "",
+    location: "",
+    dob: "",
+    country: "",
+    phone: "",
+    department: "",
+    createdBy: "Mohammad Shihabudeen",
+    updatedBy: "",
+  });
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
+  };
+
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setNewEmployee({ ...newEmployee, [name]: value });
+  };
+
+  const handleAddEmployee = () => {
+    setNewEmployee({
+      ...newEmployee,
+      id: Math.random().toString(36).substring(2, 8),
+    });
+    console.log(newEmployee);
+    dispatch(addEmployee(newEmployee));
+    setIsAddingEmployee(false);
+    setNewEmployee({
+      id: "",
+      employeeName: "",
+      profile: "/assets/profile.svg",
+      jobTitle: "",
+      jobRole: "",
+      salary: "",
+      hireDate: "",
+      contract: "",
+      maritalStatus: "",
+      degree: "",
+      location: "",
+      dob: "",
+      country: "",
+      phone: "",
+      department: "",
+      createdBy: "Mohammad Shihabudeen",
+      updatedBy: "",
+    });
   };
 
   const filteredEmployees = employees.filter((employee) =>
     employee.employeeName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-
-
   return (
     <>
-    <EmployeeSearchBar searchQuery={searchQuery} handleSearch={handleSearchChange} />
+      <EmployeeSearchBar
+        searchQuery={searchQuery}
+        handleSearch={handleSearchChange}
+      />
       <table className="w-4/5 mx-auto my-5 border-separate border-spacing-y-2 table">
         <thead>
           <tr className="text-black text-center">
-            <th>Employee's name</th>
+            <th>Employee&apos;s name</th>
             <th>Job Title</th>
             <th>Salary</th>
             <th>Hire date</th>
@@ -41,6 +113,20 @@ const EmployeeTable: React.FC = () => {
           ))}
         </tbody>
       </table>
+      <button
+        className="absolute right-12 mb-8 ms-10 px-4 py-2 my-2 bg-yellow-500 text-white rounded cursor-pointer"
+        onClick={() => setIsAddingEmployee(!isAddingEmployee)}
+      >
+        {isAddingEmployee ? "Cancel" : "Add Employee"}
+      </button>
+      {isAddingEmployee && (
+        <EmployeeAddCard
+          newEmployee={newEmployee}
+          handleInputChange={handleInputChange}
+          handleAddEmployee={handleAddEmployee}
+          defaults={defaults}
+        />
+      )}
     </>
   );
 };
