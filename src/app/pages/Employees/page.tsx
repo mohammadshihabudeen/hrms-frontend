@@ -15,16 +15,6 @@ const EmployeeTable: React.FC = () => {
   const uniqueId = uuidv4();
   const dispatch = useAppDispatch();
   const [defaults, setDefaults] = useState<any>({});
-
-  useEffect(() => {
-    dispatch(fetchEmployees());
-    dispatch(fetchDefaults()).then((action) => {
-      if (fetchDefaults.fulfilled.match(action)) {
-        setDefaults(action.payload);
-      }
-    });
-  }, [dispatch]);
-
   const employees = useAppSelector((state) => state.employees.employees);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isAddingEmployee, setIsAddingEmployee] = useState<boolean>(false);
@@ -47,6 +37,7 @@ const EmployeeTable: React.FC = () => {
     createdBy: "Mohammad Shihabudeen",
     updatedBy: "",
   });
+
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
@@ -59,12 +50,14 @@ const EmployeeTable: React.FC = () => {
   };
 
   const handleAddEmployee = () => {
-    setNewEmployee({
+    const employeeToAdd = {
       ...newEmployee,
       id: Math.random().toString(36).substring(2, 8),
+    };
+    console.log(employeeToAdd);
+    dispatch(addEmployee(employeeToAdd)).then(() => {
+      dispatch(fetchEmployees()); // Fetch the updated list of employees after adding a new one
     });
-    console.log(newEmployee);
-    dispatch(addEmployee(newEmployee));
     setIsAddingEmployee(false);
     setNewEmployee({
       id: "",
@@ -88,8 +81,17 @@ const EmployeeTable: React.FC = () => {
   };
 
   const filteredEmployees = employees.filter((employee) =>
-    employee.employeeName.toLowerCase().includes(searchQuery.toLowerCase())
+    employee.employeeName?.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  useEffect(() => {
+    dispatch(fetchEmployees());
+    dispatch(fetchDefaults()).then((action) => {
+      if (fetchDefaults.fulfilled.match(action)) {
+        setDefaults(action.payload);
+      }
+    });
+  }, [dispatch]);
 
   return (
     <>
