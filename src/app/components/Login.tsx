@@ -1,12 +1,16 @@
+// components/Login.tsx
 "use client";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../services/authService";
+import { RootState, AppDispatch } from "../store/store";
 
 const Login: React.FC = () => {
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
   const [input, setInput] = useState({ email: "", password: "" });
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const { loading, error } = useSelector((state: RootState) => state.auth);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -14,19 +18,11 @@ const Login: React.FC = () => {
 
   const formSubmitter = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!input.email) return setErrorMessage("Please enter a valid email ID");
-    if (!input.password) return setErrorMessage("Password is required");
+    if (!input.email || !input.password) return;
 
-    const result = await signIn("credentials", {
-      redirect: false,
-      username: input.email,
-      password: input.password,
-    });
-
-    if (result?.error) {
-      setErrorMessage("please enter valid Credentials");
-    } else {
-      router.push("pages/Home");
+    const result = await dispatch(loginUser({ email: input.email, password: input.password }));
+    if (loginUser.fulfilled.match(result)) {
+      router.push("/pages/Home");
     }
   };
 
@@ -37,7 +33,7 @@ const Login: React.FC = () => {
           <img src="/assets/Logo.jpg" alt="Logo" className="img mx-auto " />
         </div>
         <form onSubmit={formSubmitter}>
-          {errorMessage.length > 0 && <p className="text-red-500 mx-5 p-2">{errorMessage}</p>}
+          {error && <p className="text-red-500 mx-5 p-2">{error}</p>}
           <div className="user_box1 relative mb-4">
             <input
               type="text"
@@ -62,8 +58,9 @@ const Login: React.FC = () => {
             <button
               type="submit"
               className="login_box_button bg-gradient-to-r from-blue-400 to-blue-700 text-white font-bold py-2 px-8 rounded-full w-1/4 mx-auto"
+              disabled={loading}
             >
-              Login
+              {loading ? "Logging in..." : "Login"}
             </button>
           </div>
           <div className="text-center">

@@ -19,18 +19,11 @@ const SideBar: React.FC = () => {
       }`}
     >
       <div className="flex items-center justify-center p-2 z-50 mb-2">
-        <button
-          onClick={() => dispatch(toggleSidebar())}
-          className="bg-white border-0 text-gray-600 cursor-pointer"
-        >
-          {isOpen ? (
-            <IoMdClose className="w-6 h-6" />
-          ) : (
-            <FaBars className="w-6 h-6" />
-          )}
+        <button onClick={() => dispatch(toggleSidebar())} className="bg-white border-0 text-gray-600 cursor-pointer">
+          {isOpen ? <IoMdClose className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
         </button>
       </div>
-      {elements.map((item) => (
+      {elements.map(item => (
         <SidebarItem
           key={item.id}
           item={item}

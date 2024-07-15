@@ -20,6 +20,7 @@ import { RootState } from "@/app/store/store";
 import { updateEmployee } from "@/app/services/employeeService";
 import { EmployeeDetailCard } from "@/app/components/ui/cards/EmployeeDetailCard";
 import { PersonelDetailCard } from "@/app/components/ui/cards/PersonelDetailCard";
+import { MdEmail } from "react-icons/md";
 
 type Params = {
   params: { id: string };
@@ -29,15 +30,11 @@ const EmployeeDetail: React.FC<Params> = ({ params: { id } }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const selectedEmployee = useAppSelector((state: RootState) =>
-    state.employees.employees.find((emp) => emp.id === id)
-  );
+  const selectedEmployee = useAppSelector((state: RootState) => state.employees.employees.find(emp => emp.id === id));
 
   const [isEditingPersonal, setIsEditingPersonal] = useState(false);
   const [isEditingEmployment, setIsEditingEmployment] = useState(false);
-  const [updatedEmployee, setUpdatedEmployee] = useState<Employee | undefined>(
-    undefined
-  );
+  const [updatedEmployee, setUpdatedEmployee] = useState<Employee | undefined>(undefined);
 
   useEffect(() => {
     if (selectedEmployee) {
@@ -47,7 +44,7 @@ const EmployeeDetail: React.FC<Params> = ({ params: { id } }) => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUpdatedEmployee((prev) => ({ ...prev!, [name]: value }));
+    setUpdatedEmployee(prev => ({ ...prev!, [name]: value }));
   };
 
   const handlePersonalEditToggle = () => {
@@ -64,7 +61,7 @@ const EmployeeDetail: React.FC<Params> = ({ params: { id } }) => {
         updateEmployee({
           id: updatedEmployee.id,
           employee: { ...updatedEmployee, updatedBy: "shihab" },
-        })
+        }),
       );
       setIsEditingPersonal(false);
       setIsEditingEmployment(false);
@@ -111,6 +108,11 @@ const EmployeeDetail: React.FC<Params> = ({ params: { id } }) => {
       icon: <FaPhone className="mx-3 ic" />,
       value: updatedEmployee?.phone || "",
     },
+    {
+      name: "email",
+      icon: <MdEmail className="mx-3 ic" />,
+      value: updatedEmployee?.email || "",
+    },
   ];
 
   const employmentDetails = [
@@ -141,27 +143,14 @@ const EmployeeDetail: React.FC<Params> = ({ params: { id } }) => {
 
   return (
     <>
-      <button
-        className="backButton px-3 py-1 rounded text-sm flex items-center"
-        onClick={handleBack}
-      >
+      <button className="backButton px-3 py-1 rounded text-sm flex items-center" onClick={handleBack}>
         <FaArrowLeft className="mr-1" /> Back
       </button>
       <div className="max-w-lg mt-8">
         <PersonelDetailCard
           name="Personal Details"
-          icon={
-            <FaPencilAlt
-              className="text-white-500 cursor-pointer pencil"
-              onClick={handlePersonalEditToggle}
-            />
-          }
-          sicon={
-            <FaSave
-              className="text-white-500 cursor-pointer save"
-              onClick={handleSave}
-            />
-          }
+          icon={<FaPencilAlt className="text-white-500 cursor-pointer pencil" onClick={handlePersonalEditToggle} />}
+          sicon={<FaSave className="text-white-500 cursor-pointer save" onClick={handleSave} />}
           isEditing={isEditingPersonal}
           selectedEmployee={selectedEmployee}
           details={personalDetails}
@@ -169,18 +158,8 @@ const EmployeeDetail: React.FC<Params> = ({ params: { id } }) => {
         />
         <EmployeeDetailCard
           name="Employee Details"
-          icon={
-            <FaPencilAlt
-              className="text-white-500 cursor-pointer pencil"
-              onClick={handleEmploymentEditToggle}
-            />
-          }
-          sicon={
-            <FaSave
-              className="text-white-500 cursor-pointer save"
-              onClick={handleSave}
-            />
-          }
+          icon={<FaPencilAlt className="text-white-500 cursor-pointer pencil" onClick={handleEmploymentEditToggle} />}
+          sicon={<FaSave className="text-white-500 cursor-pointer save" onClick={handleSave} />}
           isEditing={isEditingEmployment}
           details={employmentDetails}
           handleInputChange={handleInputChange}

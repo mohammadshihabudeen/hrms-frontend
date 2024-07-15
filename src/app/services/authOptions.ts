@@ -1,13 +1,14 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { GoogleProfile } from "next-auth/providers/google";
 import axios from "axios";
 
 export const options: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      profile(profile: GoogleProfile) {
+      clientId: process.env.GOOGLE_ID as string,
+      clientSecret: process.env.GOOGLE_SECRET as string,
+      profile(profile) {
         return {
           ...profile,
           role: profile.role ?? "user",
@@ -15,8 +16,6 @@ export const options: NextAuthOptions = {
           image: profile.picture,
         };
       },
-      clientId: process.env.GOOGLE_ID as string,
-      clientSecret: process.env.GOOGLE_SECRET as string,
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -34,6 +33,7 @@ export const options: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials) {
+          console.error("No credentials provided");
           return null;
         }
 
@@ -53,10 +53,11 @@ export const options: NextAuthOptions = {
               image: user.image || "",
             };
           } else {
+            console.error("User data not found in response");
             return null;
           }
-        } catch (error) {
-          console.error("Error during login:", error);
+        } catch (error: any) {
+          console.error("Error during login:", error.response?.data || error.message);
           return null;
         }
       },
@@ -76,4 +77,19 @@ export const options: NextAuthOptions = {
       return session;
     },
   },
+  pages: {
+    signIn: "/", // Custom login page
+    signOut: "/", // Redirect to login page after sign out
+    error: "/auth/error", // Error page
+    verifyRequest: "/auth/verify-request", // Email verification page
+    newUser: undefined, // If set, new users will be directed here on first sign in
+  },
+  events: {
+    async signOut(message) {
+      // Callback to handle additional logic on sign out
+      console.log("User signed out", message);
+    },
+  },
 };
+
+import NextAuth from "next-auth";

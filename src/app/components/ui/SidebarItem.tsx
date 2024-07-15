@@ -1,6 +1,12 @@
+// components/SidebarItem.tsx
 import React, { Suspense, lazy } from "react";
-import { FaSpinner } from "react-icons/fa"; // Assuming you have react-icons installed
+import { FaSpinner } from "react-icons/fa";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store"; // Ensure this is correctly defined in your store setup
+import { logoutUser } from "@/app/services/authService";
+import { useRouter } from "next/navigation";
+
 type Props = {
   item: {
     id: number;
@@ -14,16 +20,25 @@ type Props = {
   isActive: boolean;
 };
 
-const LazySVGIcon = lazy(() => import("./SVGIcon")); // Assuming SVGIcon is a separate component for SVG rendering
+const LazySVGIcon = lazy(() => import("./SVGIcon"));
 
 const SidebarItem: React.FC<Props> = ({ item, isOpen, onClick, isActive }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+
+  const handleLogout = async (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    await dispatch(logoutUser());
+    router.push("/");
+  };
+
   return (
     <Link
-      href={`${item.name !== "Logout" ? "/pages/" + item.name : "/"}`}
-      onClick={isOpen ? onClick : undefined}
+      href={`${item.name !== "Logout" ? "/pages/" + item.name : "#"}`}
+      onClick={item.name !== "Logout" ? (isOpen ? onClick : undefined) : handleLogout}
       className="ps-5 flex items-center p-2 hover:bg-gray-200 relative mb-4"
     >
-      <div className="flex-shrink-0 text-blue-800">
+      <div className="flex items-center">
         <Suspense fallback={<FaSpinner className="animate-spin" />}>
           <LazySVGIcon item={item} isActive={isActive} />
         </Suspense>
