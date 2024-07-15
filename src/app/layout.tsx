@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "./store/Provider";
+import AuthProvider from "./context/AuthProvider";
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "HRMS",
@@ -17,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ReduxProvider>{children}</ReduxProvider>
+        <AuthProvider>
+          <ReduxProvider>{children}</ReduxProvider>
+        </AuthProvider>
       </body>
     </html>
   );
