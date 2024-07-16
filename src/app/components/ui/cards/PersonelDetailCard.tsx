@@ -1,9 +1,10 @@
-import Image from "next/image";
-import React, { ChangeEvent, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
+import React, { ChangeEvent, useEffect } from "react";
+import { selectIsAdminAuthorized, setSession } from "../../../store/slices/sessionSlice";
 import { RootState } from "../../../store/store";
-import { setSession, selectIsAdminAuthorized } from "../../../store/slices/sessionSlice";
+import SendMailButton from "../buttons/SendMailButton";
 
 interface DetailCardProps {
   name: string;
@@ -27,11 +28,13 @@ export const PersonelDetailCard: React.FC<DetailCardProps> = ({
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const isAdminAuthorized = useAppSelector((state: RootState) => selectIsAdminAuthorized(state));
+
   useEffect(() => {
     if (session) {
       dispatch(setSession(session));
     }
   }, [session, dispatch]);
+
   return (
     <>
       <div className="card bg-white shadow-md rounded-lg mb-8">
@@ -77,6 +80,9 @@ export const PersonelDetailCard: React.FC<DetailCardProps> = ({
             ))}
           </div>
         </div>
+        {isAdminAuthorized && (
+          <SendMailButton email={selectedEmployee.email} employeeName={selectedEmployee.employeeName} />
+        )}
       </div>
     </>
   );
