@@ -7,9 +7,17 @@ import EmployeeTableRow from "@/app/components/ui/cards/EmployeeTableRow";
 import EmployeeAddCard from "@/app/components/ui/cards/EmployeeAddCard";
 import { v4 as uuidv4 } from "uuid";
 import { useSession } from "next-auth/react";
-
+import { RootState } from "../../store/store";
+import { setSession, selectIsManagerAuthorized } from "../../store/slices/sessionSlice";
 const EmployeeTable: React.FC = () => {
+  const { data: session } = useSession();
   const dispatch = useAppDispatch();
+  const isManagerAuthorized = useAppSelector((state: RootState) => selectIsManagerAuthorized(state));
+  useEffect(() => {
+    if (session) {
+      dispatch(setSession(session));
+    }
+  }, [session, dispatch]);
   const [defaults, setDefaults] = useState<any>({});
   const employees = useAppSelector(state => state.employees.employees);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -34,10 +42,6 @@ const EmployeeTable: React.FC = () => {
     createdBy: "Mohammad Shihabudeen",
     updatedBy: "",
   });
-
-  const { data: session } = useSession();
-  const isAuthorized = session?.user.role === "Admin" || session?.user.role === "Manager";
-
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
@@ -110,7 +114,7 @@ const EmployeeTable: React.FC = () => {
           ))}
         </tbody>
       </table>
-      {isAuthorized && (
+      {isManagerAuthorized && (
         <>
           <button
             className="absolute right-12 mb-8 ms-10 px-4 py-2 my-2 bg-yellow-500 text-white rounded cursor-pointer"

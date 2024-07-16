@@ -1,5 +1,9 @@
 import Image from "next/image";
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
+import { useSession } from "next-auth/react";
+import { RootState } from "../../../store/store";
+import { setSession, selectIsAdminAuthorized } from "../../../store/slices/sessionSlice";
 
 interface DetailCardProps {
   name: string;
@@ -20,14 +24,26 @@ export const PersonelDetailCard: React.FC<DetailCardProps> = ({
   details,
   handleInputChange,
 }) => {
+  const { data: session } = useSession();
+  const dispatch = useAppDispatch();
+  const isAdminAuthorized = useAppSelector((state: RootState) => selectIsAdminAuthorized(state));
+  useEffect(() => {
+    if (session) {
+      dispatch(setSession(session));
+    }
+  }, [session, dispatch]);
   return (
     <>
       <div className="card bg-white shadow-md rounded-lg mb-8">
         <div className="card_header flex justify-between items-center mb-4">
           <div className="text-xl font-bold">{name}</div>
           <div className="flex items-center">
-            {icon}
-            {isEditing && sicon}
+            {isAdminAuthorized && (
+              <>
+                {icon}
+                {isEditing && sicon}
+              </>
+            )}
           </div>
         </div>
         <div className="card_body flex">

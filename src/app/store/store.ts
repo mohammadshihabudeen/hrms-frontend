@@ -5,7 +5,7 @@ import certificateReducer from "./slices/certificateSlice";
 import educationReducer from "./slices/educationSlice";
 import employeeSlice from "./slices/employeeSlice";
 import experienceReducer from "./slices/experienceSlice";
-import loginReducer from "./slices/loginSlice";
+import sessionReducer from "./slices/sessionSlice";
 import sidebarReducer from "./slices/sidebarSlice";
 import userReducer from "./slices/userSlice";
 import authReducer from "./slices/authSlice";
@@ -15,7 +15,7 @@ const store = configureStore({
     auth: authReducer,
     sidebar: sidebarReducer,
     user: userReducer,
-    login: loginReducer,
+    session: sessionReducer,
     activities: activitiesReducer,
     education: educationReducer,
     experience: experienceReducer,
