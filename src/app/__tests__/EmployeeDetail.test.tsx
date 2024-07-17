@@ -15,8 +15,12 @@ const mockedEmployees: Employee[] = [
   {
     id: "1",
     employeeName: "Mohammad Shihabudeen",
+    email: "city.shihabudeen@gmail.com",
     profile: "/assets/profile.svg",
     jobTitle: "Software Engineer",
+    jobRole: "Admin",
+    createdBy: "Shihab",
+    updatedBy: "shihab",
     salary: "$100,000",
     hireDate: "2020-01-15",
     contract: "Permanent",
@@ -83,7 +87,7 @@ describe("EmployeeDetail", () => {
     render(
       <Provider store={store}>
         <EmployeeDetail params={{ id: "1" }} />
-      </Provider>
+      </Provider>,
     );
 
     expect(screen.getByText("Employee Details")).toBeInTheDocument();

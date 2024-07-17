@@ -1,5 +1,22 @@
 import React, { ChangeEvent, useState } from "react";
 
+type Employee = {
+  employeeName: string;
+  jobTitle: string;
+  jobRole: string;
+  salary: string;
+  hireDate: string;
+  contract: string;
+  maritalStatus: string;
+  degree: string;
+  location: string;
+  dob: string;
+  country: string;
+  phone: string;
+  department: string;
+  email: string;
+};
+
 type Props = {
   newEmployee: Employee;
   handleInputChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
@@ -14,7 +31,7 @@ type Props = {
   };
 };
 
-const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, defaults }: Props) => {
+const EmployeeAddCard: React.FC<Props> = ({ newEmployee, handleInputChange, handleAddEmployee, defaults }) => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const validateFields = () => {
@@ -32,7 +49,7 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
     if (!newEmployee.country) newErrors.country = "Country is required";
     if (!newEmployee.phone) newErrors.phone = "Phone is required";
     if (!newEmployee.department) newErrors.department = "Department is required";
-    if (!newEmployee.email) newErrors.department = "Email is required";
+    if (!newEmployee.email) newErrors.email = "Email is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -49,8 +66,11 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
       <h2 className="text-center text-2xl font-semibold mb-6">Add New Employee</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-gray-700">Employee Name</label>
+          <label htmlFor="employeeName" className="block text-gray-700">
+            Employee Name
+          </label>
           <input
+            id="employeeName"
             className={`w-full border rounded-lg p-2 mt-1 ${
               errors.employeeName ? "border-red-500" : "border-gray-300"
             }`}
@@ -63,8 +83,11 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
           {errors.employeeName && <p className="text-red-500 text-sm">{errors.employeeName}</p>}
         </div>
         <div>
-          <label className="block text-gray-700">Job Title</label>
+          <label htmlFor="jobTitle" className="block text-gray-700">
+            Job Title
+          </label>
           <select
+            id="jobTitle"
             className={`w-full border rounded-lg p-2 mt-1 ${errors.jobTitle ? "border-red-500" : "border-gray-300"}`}
             name="jobTitle"
             value={newEmployee.jobTitle}
@@ -80,8 +103,11 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
           {errors.jobTitle && <p className="text-red-500 text-sm">{errors.jobTitle}</p>}
         </div>
         <div>
-          <label className="block text-gray-700">Job Role</label>
+          <label htmlFor="jobRole" className="block text-gray-700">
+            Job Role
+          </label>
           <select
+            id="jobRole"
             className={`w-full border rounded-lg p-2 mt-1 ${errors.jobRole ? "border-red-500" : "border-gray-300"}`}
             name="jobRole"
             value={newEmployee.jobRole}
@@ -97,8 +123,11 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
           {errors.jobRole && <p className="text-red-500 text-sm">{errors.jobRole}</p>}
         </div>
         <div>
-          <label className="block text-gray-700">Salary</label>
+          <label htmlFor="salary" className="block text-gray-700">
+            Salary
+          </label>
           <input
+            id="salary"
             className={`w-full border rounded-lg p-2 mt-1 ${errors.salary ? "border-red-500" : "border-gray-300"}`}
             type="text"
             name="salary"
@@ -109,8 +138,11 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
           {errors.salary && <p className="text-red-500 text-sm">{errors.salary}</p>}
         </div>
         <div>
-          <label className="block text-gray-700">Hire Date</label>
+          <label htmlFor="hireDate" className="block text-gray-700">
+            Hire Date
+          </label>
           <input
+            id="hireDate"
             className={`w-full border rounded-lg p-2 mt-1 ${errors.hireDate ? "border-red-500" : "border-gray-300"}`}
             type="text"
             name="hireDate"
@@ -121,8 +153,11 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
           {errors.hireDate && <p className="text-red-500 text-sm">{errors.hireDate}</p>}
         </div>
         <div>
-          <label className="block text-gray-700">Contract</label>
+          <label htmlFor="contract" className="block text-gray-700">
+            Contract
+          </label>
           <input
+            id="contract"
             className={`w-full border rounded-lg p-2 mt-1 ${errors.contract ? "border-red-500" : "border-gray-300"}`}
             type="text"
             name="contract"
@@ -133,8 +168,11 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
           {errors.contract && <p className="text-red-500 text-sm">{errors.contract}</p>}
         </div>
         <div>
-          <label className="block text-gray-700">Marital Status</label>
+          <label htmlFor="maritalStatus" className="block text-gray-700">
+            Marital Status
+          </label>
           <select
+            id="maritalStatus"
             className={`w-full border rounded-lg p-2 mt-1 ${
               errors.maritalStatus ? "border-red-500" : "border-gray-300"
             }`}
@@ -152,8 +190,11 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
           {errors.maritalStatus && <p className="text-red-500 text-sm">{errors.maritalStatus}</p>}
         </div>
         <div>
-          <label className="block text-gray-700">Degree</label>
+          <label htmlFor="degree" className="block text-gray-700">
+            Degree
+          </label>
           <input
+            id="degree"
             className={`w-full border rounded-lg p-2 mt-1 ${errors.degree ? "border-red-500" : "border-gray-300"}`}
             type="text"
             name="degree"
@@ -164,8 +205,11 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
           {errors.degree && <p className="text-red-500 text-sm">{errors.degree}</p>}
         </div>
         <div>
-          <label className="block text-gray-700">Email</label>
+          <label htmlFor="email" className="block text-gray-700">
+            Email
+          </label>
           <input
+            id="email"
             className={`w-full border rounded-lg p-2 mt-1 ${errors.email ? "border-red-500" : "border-gray-300"}`}
             type="email"
             name="email"
@@ -176,8 +220,11 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
           {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
         </div>
         <div>
-          <label className="block text-gray-700">Location</label>
+          <label htmlFor="location" className="block text-gray-700">
+            Location
+          </label>
           <select
+            id="location"
             className={`w-full border rounded-lg p-2 mt-1 ${errors.location ? "border-red-500" : "border-gray-300"}`}
             name="location"
             value={newEmployee.location}
@@ -193,8 +240,11 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
           {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
         </div>
         <div>
-          <label className="block text-gray-700">Date of Birth</label>
+          <label htmlFor="dob" className="block text-gray-700">
+            Date of Birth
+          </label>
           <input
+            id="dob"
             className={`w-full border rounded-lg p-2 mt-1 ${errors.dob ? "border-red-500" : "border-gray-300"}`}
             type="text"
             name="dob"
@@ -205,8 +255,11 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
           {errors.dob && <p className="text-red-500 text-sm">{errors.dob}</p>}
         </div>
         <div>
-          <label className="block text-gray-700">Country</label>
+          <label htmlFor="country" className="block text-gray-700">
+            Country
+          </label>
           <select
+            id="country"
             className={`w-full border rounded-lg p-2 mt-1 ${errors.country ? "border-red-500" : "border-gray-300"}`}
             name="country"
             value={newEmployee.country}
@@ -222,8 +275,11 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
           {errors.country && <p className="text-red-500 text-sm">{errors.country}</p>}
         </div>
         <div>
-          <label className="block text-gray-700">Phone</label>
+          <label htmlFor="phone" className="block text-gray-700">
+            Phone
+          </label>
           <input
+            id="phone"
             className={`w-full border rounded-lg p-2 mt-1 ${errors.phone ? "border-red-500" : "border-gray-300"}`}
             type="text"
             name="phone"
@@ -234,8 +290,11 @@ const EmployeeAddCard = ({ newEmployee, handleInputChange, handleAddEmployee, de
           {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
         </div>
         <div>
-          <label className="block text-gray-700">Department</label>
+          <label htmlFor="department" className="block text-gray-700">
+            Department
+          </label>
           <select
+            id="department"
             className={`w-full border rounded-lg p-2 mt-1 ${errors.department ? "border-red-500" : "border-gray-300"}`}
             name="department"
             value={newEmployee.department}
