@@ -1,22 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
 
-type Employee = {
-  employeeName: string;
-  jobTitle: string;
-  jobRole: string;
-  salary: string;
-  hireDate: string;
-  contract: string;
-  maritalStatus: string;
-  degree: string;
-  location: string;
-  dob: string;
-  country: string;
-  phone: string;
-  department: string;
-  email: string;
-};
-
 type Props = {
   newEmployee: Employee;
   handleInputChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;

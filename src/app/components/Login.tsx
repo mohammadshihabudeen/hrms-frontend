@@ -1,6 +1,9 @@
 // components/Login.tsx
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { clearSession, setSession } from "@/app/store/slices/sessionSlice";
+import { useAppDispatch } from "@/app/store/hooks";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../services/authService";
@@ -22,6 +25,16 @@ const Login: React.FC = () => {
 
     const result = await dispatch(loginUser({ email: input.email, password: input.password }));
     if (loginUser.fulfilled.match(result)) {
+      dispatch(clearSession());
+      const customSession = {
+        user: {
+          id: result.payload.id,
+          name: result.payload.name,
+          role: result.payload.role,
+          image: result.payload.image || "/profile.png",
+        },
+      };
+      dispatch(setSession(customSession));
       router.push("/pages/Home");
     }
   };

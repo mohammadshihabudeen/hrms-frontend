@@ -9,17 +9,12 @@ import { v4 as uuidv4 } from "uuid";
 import { useSession } from "next-auth/react";
 import { RootState } from "../../store/store";
 import { setSession, selectIsManagerAuthorized } from "../../store/slices/sessionSlice";
+
 const EmployeeTable: React.FC = () => {
-  const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const isManagerAuthorized = useAppSelector((state: RootState) => selectIsManagerAuthorized(state));
-  useEffect(() => {
-    if (session) {
-      dispatch(setSession(session));
-    }
-  }, [session, dispatch]);
   const [defaults, setDefaults] = useState<any>({});
-  const employees = useAppSelector(state => state.employees.employees);
+  const employees = useAppSelector((state: RootState) => state.employees.employees);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isAddingEmployee, setIsAddingEmployee] = useState<boolean>(false);
   const [newEmployee, setNewEmployee] = useState<Employee>({
@@ -42,6 +37,24 @@ const EmployeeTable: React.FC = () => {
     createdBy: "Mohammad Shihabudeen",
     updatedBy: "",
   });
+
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session) {
+      dispatch(
+        setSession({
+          user: {
+            id: session.user.id,
+            name: session.user.name,
+            role: session.user.role,
+            image: session.user.image,
+          },
+        }),
+      );
+    }
+  }, [session, dispatch]);
+
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
