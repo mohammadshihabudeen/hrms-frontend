@@ -7,7 +7,7 @@ type Props = {
   handleAddEmployee: () => void;
   defaults: {
     jobTitles: { id: string; title: string }[];
-    jobRoles: { id: string; role: string }[];
+    jobRoles: { id: string; Role: string }[];
     maritalStatuses: { id: string; status: string }[];
     countries: { id: string; name: string }[];
     departments: { id: string; name: string }[];
@@ -131,8 +131,8 @@ const EmployeeAddCard: React.FC<Props> = ({ newEmployee, handleInputChange, hand
           >
             <option value="">Select</option>
             {defaults.jobRoles.map(jobRole => (
-              <option key={jobRole.id} value={jobRole.role}>
-                {jobRole.role}
+              <option key={jobRole.id} value={jobRole.Role}>
+                {jobRole.Role}
               </option>
             ))}
           </select>
