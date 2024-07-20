@@ -39,7 +39,7 @@ export const options: NextAuthOptions = {
 
         try {
           const response = await axios.post("http://localhost:5000/api/v1/Login", {
-            email: credentials.username,
+            employeeId: credentials.username,
             password: credentials.password,
           });
 
@@ -81,7 +81,7 @@ export const options: NextAuthOptions = {
     signIn: "/", // Custom login page
     signOut: "/", // Redirect to login page after sign out
     error: "/auth/error", // Error page
-    verifyRequest: "/auth/verify-request", // Email verification page
+    verifyRequest: "/auth/verify-request", // EmployeeId verification page
     newUser: undefined, // If set, new users will be directed here on first sign in
   },
   events: {
@@ -91,5 +91,3 @@ export const options: NextAuthOptions = {
     },
   },
 };
-
-import NextAuth from "next-auth";

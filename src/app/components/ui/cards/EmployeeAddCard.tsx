@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
+import axios from "axios";
 
 type Props = {
   newEmployee: Employee;
@@ -6,7 +7,7 @@ type Props = {
   handleAddEmployee: () => void;
   defaults: {
     jobTitles: { id: string; title: string }[];
-    jobRoles: { id: string; Role: string }[];
+    jobRoles: { id: string; role: string }[];
     maritalStatuses: { id: string; status: string }[];
     countries: { id: string; name: string }[];
     departments: { id: string; name: string }[];
@@ -16,8 +17,19 @@ type Props = {
 
 const EmployeeAddCard: React.FC<Props> = ({ newEmployee, handleInputChange, handleAddEmployee, defaults }) => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const checkRegistrationEmployeeIdStatus = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/v1/register/check-employeeId", {
+        params: { employeeId: newEmployee.employeeId },
+      });
+      return response.data.registered;
+    } catch (error) {
+      console.error("Error checking registration status", error);
+      return false;
+    }
+  };
 
-  const validateFields = () => {
+  const validateFields = async () => {
     const newErrors: { [key: string]: string } = {};
     if (!newEmployee.employeeName) newErrors.employeeName = "Employee name is required";
     if (!newEmployee.jobTitle) newErrors.jobTitle = "Job title is required";
@@ -33,13 +45,19 @@ const EmployeeAddCard: React.FC<Props> = ({ newEmployee, handleInputChange, hand
     if (!newEmployee.phone) newErrors.phone = "Phone is required";
     if (!newEmployee.department) newErrors.department = "Department is required";
     if (!newEmployee.email) newErrors.email = "Email is required";
-
+    if (!newEmployee.employeeId) newErrors.employeeId = "Employee Id is required";
+    if (newEmployee.employeeId) {
+      const isRegistered = await checkRegistrationEmployeeIdStatus();
+      if (isRegistered) {
+        newErrors.employeeId = "Employee Id is already taken";
+      }
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const onSubmit = () => {
-    if (validateFields()) {
+  const onSubmit = async () => {
+    if (await validateFields()) {
       handleAddEmployee();
     }
   };
@@ -64,6 +82,21 @@ const EmployeeAddCard: React.FC<Props> = ({ newEmployee, handleInputChange, hand
             onChange={handleInputChange}
           />
           {errors.employeeName && <p className="text-red-500 text-sm">{errors.employeeName}</p>}
+        </div>
+        <div>
+          <label htmlFor="employeeId" className="block text-gray-700">
+            Employee Id
+          </label>
+          <input
+            id="employeeId"
+            className={`w-full border rounded-lg p-2 mt-1 ${errors.employeeId ? "border-red-500" : "border-gray-300"}`}
+            type="text"
+            name="employeeId"
+            placeholder="Employee Id"
+            value={newEmployee.employeeId}
+            onChange={handleInputChange}
+          />
+          {errors.employeeId && <p className="text-red-500 text-sm">{errors.employeeId}</p>}
         </div>
         <div>
           <label htmlFor="jobTitle" className="block text-gray-700">
@@ -98,8 +131,8 @@ const EmployeeAddCard: React.FC<Props> = ({ newEmployee, handleInputChange, hand
           >
             <option value="">Select</option>
             {defaults.jobRoles.map(jobRole => (
-              <option key={jobRole.id} value={jobRole.Role}>
-                {jobRole.Role}
+              <option key={jobRole.id} value={jobRole.role}>
+                {jobRole.role}
               </option>
             ))}
           </select>

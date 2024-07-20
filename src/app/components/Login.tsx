@@ -12,7 +12,7 @@ import { RootState, AppDispatch } from "../store/store";
 const Login: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const [input, setInput] = useState({ email: "", password: "" });
+  const [input, setInput] = useState({ employeeId: "", password: "" });
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,9 +21,9 @@ const Login: React.FC = () => {
 
   const formSubmitter = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!input.email || !input.password) return;
+    if (!input.employeeId || !input.password) return;
 
-    const result = await dispatch(loginUser({ email: input.email, password: input.password }));
+    const result = await dispatch(loginUser({ employeeId: input.employeeId, password: input.password }));
     if (loginUser.fulfilled.match(result)) {
       dispatch(clearSession());
       const customSession = {
@@ -50,10 +50,10 @@ const Login: React.FC = () => {
           <div className="user_box1 relative mb-4">
             <input
               type="text"
-              name="email"
+              name="employeeId"
               required
               onChange={handleChange}
-              placeholder="Email"
+              placeholder="Employee Id"
               className="input w-10/12 py-2 text-lg text-gray-600 mt-5 border-bottom-gray border-b-2 border-gray-300 outline-none mx-8"
             />
           </div>

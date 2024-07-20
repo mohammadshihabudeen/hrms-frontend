@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { signIn, signOut } from "next-auth/react";
 import axios from "axios";
-export const loginUser = createAsyncThunk<User, { email: string; password: string }, { rejectValue: string }>(
+export const loginUser = createAsyncThunk<User, { employeeId: string; password: string }, { rejectValue: string }>(
   "auth/loginUser",
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ employeeId, password }, { rejectWithValue }) => {
     try {
       const result = await signIn("credentials", {
         redirect: false,
-        username: email,
+        username: employeeId,
         password: password,
       });
 

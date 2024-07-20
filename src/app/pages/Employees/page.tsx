@@ -20,6 +20,7 @@ const EmployeeTable: React.FC = () => {
   const [newEmployee, setNewEmployee] = useState<Employee>({
     id: "",
     employeeName: "",
+    employeeId: "",
     email: "",
     profile: "/assets/profile.svg",
     jobTitle: "",
@@ -76,6 +77,7 @@ const EmployeeTable: React.FC = () => {
     setNewEmployee({
       id: "",
       employeeName: "",
+      employeeId: "",
       email: "",
       profile: "/assets/profile.svg",
       jobTitle: "",
