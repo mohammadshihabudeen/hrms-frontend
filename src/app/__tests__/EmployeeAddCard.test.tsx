@@ -57,11 +57,13 @@ const mockedNewEmployee = {
 
 const handleInputChange = jest.fn();
 const handleAddEmployee = jest.fn();
+const handleDateChange = jest.fn();
 
 describe("EmployeeAddCard Component", () => {
   it("renders form fields correctly", () => {
     render(
       <EmployeeAddCard
+        handleDateChange={handleDateChange}
         newEmployee={mockedNewEmployee}
         handleInputChange={handleInputChange}
         handleAddEmployee={handleAddEmployee}
@@ -90,6 +92,7 @@ describe("EmployeeAddCard Component", () => {
   it("displays validation errors when required fields are empty", async () => {
     render(
       <EmployeeAddCard
+        handleDateChange={handleDateChange}
         newEmployee={mockedNewEmployee}
         handleInputChange={handleInputChange}
         handleAddEmployee={handleAddEmployee}
@@ -121,6 +124,7 @@ describe("EmployeeAddCard Component", () => {
   it("calls handleInputChange when input fields are changed", () => {
     render(
       <EmployeeAddCard
+        handleDateChange={handleDateChange}
         newEmployee={mockedNewEmployee}
         handleInputChange={handleInputChange}
         handleAddEmployee={handleAddEmployee}
@@ -139,6 +143,7 @@ describe("EmployeeAddCard Component", () => {
 
     render(
       <EmployeeAddCard
+        handleDateChange={handleDateChange}
         newEmployee={{
           ...mockedNewEmployee,
           employeeName: "John Doe",
@@ -175,6 +180,7 @@ describe("EmployeeAddCard Component", () => {
 
     render(
       <EmployeeAddCard
+        handleDateChange={handleDateChange}
         newEmployee={{
           ...mockedNewEmployee,
           employeeId: "EMP123",
