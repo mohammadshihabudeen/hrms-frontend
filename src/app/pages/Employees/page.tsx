@@ -1,14 +1,14 @@
 "use client";
-import React, { ChangeEvent, useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
-import { addEmployee, fetchEmployees, fetchDefaults } from "@/app/services/employeeService";
+import EmployeeAddCard from "@/app/components/ui/cards/EmployeeAddCard";
 import EmployeeSearchBar from "@/app/components/ui/cards/EmployeeSearch";
 import EmployeeTableRow from "@/app/components/ui/cards/EmployeeTableRow";
-import EmployeeAddCard from "@/app/components/ui/cards/EmployeeAddCard";
-import { v4 as uuidv4 } from "uuid";
+import { addEmployee, fetchDefaults, fetchEmployees } from "@/app/services/employeeService";
+import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
 import { useSession } from "next-auth/react";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { selectIsManagerAuthorized, setSession } from "../../store/slices/sessionSlice";
 import { RootState } from "../../store/store";
-import { setSession, selectIsManagerAuthorized } from "../../store/slices/sessionSlice";
 
 const EmployeeTable: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -110,6 +110,13 @@ const EmployeeTable: React.FC = () => {
     });
   }, [dispatch]);
 
+  const handleDateChange = (date: Date | null, fieldName: string) => {
+  setNewEmployee(prevState => ({
+    ...prevState,
+    [fieldName]: date ? date.toISOString().split('T')[0] : ""
+  }));
+};
+
   return (
     <>
       <EmployeeSearchBar searchQuery={searchQuery} handleSearch={handleSearchChange} />
@@ -143,6 +150,7 @@ const EmployeeTable: React.FC = () => {
               handleInputChange={handleInputChange}
               handleAddEmployee={handleAddEmployee}
               defaults={defaults}
+              handleDateChange={handleDateChange}
             />
           )}
         </>

@@ -1,10 +1,13 @@
-import React, { ChangeEvent, useState } from "react";
 import axios from "axios";
+import React, { ChangeEvent, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 type Props = {
   newEmployee: Employee;
   handleInputChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   handleAddEmployee: () => void;
+  handleDateChange: (date: Date | null, fieldName: string) => void;
   defaults: {
     jobTitles: { id: string; title: string }[];
     jobRoles: { id: string; Role: string }[];
@@ -15,7 +18,7 @@ type Props = {
   };
 };
 
-const EmployeeAddCard: React.FC<Props> = ({ newEmployee, handleInputChange, handleAddEmployee, defaults }) => {
+const EmployeeAddCard: React.FC<Props> = ({ newEmployee, handleInputChange, handleAddEmployee, defaults,handleDateChange }) => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const checkRegistrationEmployeeIdStatus = async () => {
     try {
@@ -157,14 +160,12 @@ const EmployeeAddCard: React.FC<Props> = ({ newEmployee, handleInputChange, hand
           <label htmlFor="hireDate" className="block text-gray-700">
             Hire Date
           </label>
-          <input
-            id="hireDate"
+          <DatePicker
             className={`w-full border rounded-lg p-2 mt-1 ${errors.hireDate ? "border-red-500" : "border-gray-300"}`}
-            type="text"
-            name="hireDate"
-            placeholder="Hire Date"
-            value={newEmployee.hireDate}
-            onChange={handleInputChange}
+            selected={newEmployee.hireDate ? new Date(newEmployee.hireDate) : null}
+            onChange={(date: Date | null) => handleDateChange(date, "hireDate")}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="Hire Date"
           />
           {errors.hireDate && <p className="text-red-500 text-sm">{errors.hireDate}</p>}
         </div>
@@ -259,14 +260,12 @@ const EmployeeAddCard: React.FC<Props> = ({ newEmployee, handleInputChange, hand
           <label htmlFor="dob" className="block text-gray-700">
             Date of Birth
           </label>
-          <input
-            id="dob"
+          <DatePicker
             className={`w-full border rounded-lg p-2 mt-1 ${errors.dob ? "border-red-500" : "border-gray-300"}`}
-            type="text"
-            name="dob"
-            placeholder="Date of Birth"
-            value={newEmployee.dob}
-            onChange={handleInputChange}
+            selected={newEmployee.dob ? new Date(newEmployee.dob) : null}
+            onChange={(date: Date | null) => handleDateChange(date, "dob")}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="Date of Birth"
           />
           {errors.dob && <p className="text-red-500 text-sm">{errors.dob}</p>}
         </div>

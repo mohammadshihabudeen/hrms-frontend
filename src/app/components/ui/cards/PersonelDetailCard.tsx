@@ -92,7 +92,7 @@ export const PersonelDetailCard: React.FC<DetailCardProps> = ({
               </div>
             </div>
           ))}
-          <SendMailButton email={selectedEmployee.email} employeeName={selectedEmployee.employeeName} />
+          <SendMailButton email={selectedEmployee.email} employeeName={selectedEmployee.employeeName} employeeId={selectedEmployee.employeeId} />
         </div>
       </div>
     </div>
