@@ -1,6 +1,10 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import EmployeeAddCard from "@/app/components/ui/cards/EmployeeAddCard";
+import axios from "axios";
+
+jest.mock("axios");
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 const mockedDefaults = {
   jobTitles: [
@@ -46,6 +50,7 @@ const mockedNewEmployee = {
   country: "",
   phone: "",
   department: "",
+  employeeId: "",
   createdBy: "Mohammad Shihabudeen",
   updatedBy: "",
 };
@@ -66,6 +71,7 @@ describe("EmployeeAddCard Component", () => {
 
     // Check if form fields are rendered
     expect(screen.getByLabelText("Employee Name")).toBeInTheDocument();
+    expect(screen.getByLabelText("Employee Id")).toBeInTheDocument();
     expect(screen.getByLabelText("Job Title")).toBeInTheDocument();
     expect(screen.getByLabelText("Job Role")).toBeInTheDocument();
     expect(screen.getByLabelText("Salary")).toBeInTheDocument();
@@ -81,7 +87,7 @@ describe("EmployeeAddCard Component", () => {
     expect(screen.getByLabelText("Department")).toBeInTheDocument();
   });
 
-  it("displays validation errors when required fields are empty", () => {
+  it("displays validation errors when required fields are empty", async () => {
     render(
       <EmployeeAddCard
         newEmployee={mockedNewEmployee}
@@ -93,20 +99,23 @@ describe("EmployeeAddCard Component", () => {
 
     fireEvent.click(screen.getByText("Save Employee"));
 
-    expect(screen.getByText("Employee name is required")).toBeInTheDocument();
-    expect(screen.getByText("Job title is required")).toBeInTheDocument();
-    expect(screen.getByText("Job role is required")).toBeInTheDocument();
-    expect(screen.getByText("Salary is required")).toBeInTheDocument();
-    expect(screen.getByText("Hire date is required")).toBeInTheDocument();
-    expect(screen.getByText("Contract is required")).toBeInTheDocument();
-    expect(screen.getByText("Marital status is required")).toBeInTheDocument();
-    expect(screen.getByText("Degree is required")).toBeInTheDocument();
-    expect(screen.getByText("Location is required")).toBeInTheDocument();
-    expect(screen.getByText("Date of birth is required")).toBeInTheDocument();
-    expect(screen.getByText("Country is required")).toBeInTheDocument();
-    expect(screen.getByText("Phone is required")).toBeInTheDocument();
-    expect(screen.getByText("Department is required")).toBeInTheDocument();
-    expect(screen.getByText("Email is required")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Employee name is required")).toBeInTheDocument();
+      expect(screen.getByText("Job title is required")).toBeInTheDocument();
+      expect(screen.getByText("Job role is required")).toBeInTheDocument();
+      expect(screen.getByText("Salary is required")).toBeInTheDocument();
+      expect(screen.getByText("Hire date is required")).toBeInTheDocument();
+      expect(screen.getByText("Contract is required")).toBeInTheDocument();
+      expect(screen.getByText("Marital status is required")).toBeInTheDocument();
+      expect(screen.getByText("Degree is required")).toBeInTheDocument();
+      expect(screen.getByText("Location is required")).toBeInTheDocument();
+      expect(screen.getByText("Date of birth is required")).toBeInTheDocument();
+      expect(screen.getByText("Country is required")).toBeInTheDocument();
+      expect(screen.getByText("Phone is required")).toBeInTheDocument();
+      expect(screen.getByText("Department is required")).toBeInTheDocument();
+      expect(screen.getByText("Email is required")).toBeInTheDocument();
+      expect(screen.getByText("Employee Id is required")).toBeInTheDocument();
+    });
   });
 
   it("calls handleInputChange when input fields are changed", () => {
@@ -125,7 +134,9 @@ describe("EmployeeAddCard Component", () => {
     expect(handleInputChange).toHaveBeenCalledTimes(2);
   });
 
-  it("calls handleAddEmployee when form is submitted with valid data", () => {
+  it("calls handleAddEmployee when form is submitted with valid data", async () => {
+    mockedAxios.get.mockResolvedValueOnce({ data: { registered: false } });
+
     render(
       <EmployeeAddCard
         newEmployee={{
@@ -144,6 +155,7 @@ describe("EmployeeAddCard Component", () => {
           phone: "1234567890",
           department: "Software",
           email: "johndoe@example.com",
+          employeeId: "EMP123",
         }}
         handleInputChange={handleInputChange}
         handleAddEmployee={handleAddEmployee}
@@ -153,6 +165,30 @@ describe("EmployeeAddCard Component", () => {
 
     fireEvent.click(screen.getByText("Save Employee"));
 
-    expect(handleAddEmployee).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(handleAddEmployee).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it("displays error when employee ID is already taken", async () => {
+    mockedAxios.get.mockResolvedValueOnce({ data: { registered: true } });
+
+    render(
+      <EmployeeAddCard
+        newEmployee={{
+          ...mockedNewEmployee,
+          employeeId: "EMP123",
+        }}
+        handleInputChange={handleInputChange}
+        handleAddEmployee={handleAddEmployee}
+        defaults={mockedDefaults}
+      />,
+    );
+
+    fireEvent.click(screen.getByText("Save Employee"));
+
+    await waitFor(() => {
+      expect(screen.getByText("Employee Id is already taken")).toBeInTheDocument();
+    });
   });
 });

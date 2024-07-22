@@ -10,29 +10,31 @@ jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
 
-const mockStore = configureStore<RootState>([]);
 const mockedEmployees: Employee[] = [
   {
     id: "1",
     employeeName: "Mohammad Shihabudeen",
+    employeeId: "ShihabZenquix",
     email: "city.shihabudeen@gmail.com",
     profile: "/assets/profile.svg",
-    jobTitle: "Software Engineer",
+    jobTitle: "Software developer",
     jobRole: "Admin",
+    salary: "1300",
+    hireDate: "12-12-2021",
+    contract: "perm",
+    maritalStatus: "Unmarried",
+    degree: "be",
+    location: "Banglore",
+    dob: "04-11-2002",
+    country: "india",
+    phone: "12321",
+    department: "Software",
     createdBy: "Shihab",
-    updatedBy: "shihab",
-    salary: "$100,000",
-    hireDate: "2020-01-15",
-    contract: "Permanent",
-    maritalStatus: "Single",
-    degree: "Bachelor of Engineering",
-    location: "Chennai",
-    dob: "10.03.2000",
-    country: "India",
-    phone: "9876543210",
-    department: "Marketing",
+    updatedBy: "Shihab",
   },
 ];
+
+const mockStore = configureStore<RootState>([]);
 
 describe("EmployeeDetail", () => {
   let store: any;
@@ -49,9 +51,17 @@ describe("EmployeeDetail", () => {
         name: "",
         position: "",
       },
-      login: {
-        isLoggedIn: false,
-        errorMessage: "",
+      auth: {
+        isAuthenticated: false,
+        user: null,
+        loading: false,
+        error: null,
+      },
+      session: {
+        // Add this property
+        session: null,
+        isAdminAuthorized: false,
+        isManagerAuthorized: false,
       },
       activities: {
         activities: [],
@@ -75,6 +85,8 @@ describe("EmployeeDetail", () => {
       employees: {
         employees: mockedEmployees,
         selectedEmployeeId: "1",
+        loading: false,
+        error: null,
       },
     });
 
