@@ -36,7 +36,7 @@ const SendMailButton: React.FC<SendMailButtonProps> = ({ email, employeeName }) 
   return (
     <button
       onClick={handleSendMail}
-      className={`px-4 py-2 rounded ${
+      className={`px-4 py-2 rounded MailButton ${
         isRegistered ? "bg-gray-400 cursor-not-allowed" : "bg-green-500 hover:bg-green-700"
       } text-white`}
       disabled={isRegistered}
