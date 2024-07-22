@@ -400,15 +400,23 @@ td:last-child .line {
 {
   color: #274bc2;
 }
-.data
+.dataV
 {
-  margin-left: 50px;
+  margin-left: 79px;
   font-weight: bold;
 }
-.data1
+.dataV1
 {
-  margin-left: 25px;
+  margin-left: 55px;
   font-weight: bold;
+}
+.selectW1
+{
+  width: 45%;
+}
+.selectW
+{
+  width: 45%;
 }
 .einput
 {
@@ -435,6 +443,8 @@ td:last-child .line {
 .backButton:hover{
   color: rgb(0, 0, 0);
 }
+
+
 
 /* Responsive styles */
 @media (max-width: 780px) {
@@ -631,4 +641,20 @@ td:last-child .line {
   }
 }
 /* Leave Stlyes Start */
+
+.datepicker
+
+{
+    width:127%
+}
+.selectF
+{
+  width:82% ;
+}
+.MailButton
+{
+  width: 200px;
+  height: 40px;
+  margin-left: 50px;
+}
 
