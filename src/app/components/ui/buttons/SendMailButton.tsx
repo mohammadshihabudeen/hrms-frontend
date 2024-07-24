@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 interface SendMailButtonProps {
   email: string;
   employeeName: string;
-  employeeId: string
+  employeeId: string;
 }
 
-const SendMailButton: React.FC<SendMailButtonProps> = ({ email, employeeName,employeeId }) => {
+const SendMailButton: React.FC<SendMailButtonProps> = ({ email, employeeName, employeeId }) => {
   const [isRegistered, setIsRegistered] = useState(false);
 
   useEffect(() => {
@@ -26,8 +26,9 @@ const SendMailButton: React.FC<SendMailButtonProps> = ({ email, employeeName,emp
 
   const handleSendMail = async () => {
     try {
-      await axios.post("http://localhost:5000/api/v1/register/mail", { email, employeeName,employeeId});
+      await axios.post("http://localhost:5000/api/v1/register/mail", { email, employeeName, employeeId });
       alert("Email sent successfully");
+      setIsRegistered(true);
     } catch (error) {
       console.error("Error sending email", error);
       alert("Failed to send email");
