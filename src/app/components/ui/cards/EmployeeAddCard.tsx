@@ -18,7 +18,13 @@ type Props = {
   };
 };
 
-const EmployeeAddCard: React.FC<Props> = ({ newEmployee, handleInputChange, handleAddEmployee, defaults,handleDateChange }) => {
+const EmployeeAddCard: React.FC<Props> = ({
+  newEmployee,
+  handleInputChange,
+  handleAddEmployee,
+  defaults,
+  handleDateChange,
+}) => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const checkRegistrationEmployeeIdStatus = async () => {
     try {
@@ -161,7 +167,10 @@ const EmployeeAddCard: React.FC<Props> = ({ newEmployee, handleInputChange, hand
             Hire Date
           </label>
           <DatePicker
-            className={`datepicker border rounded-lg p-2 mt-1 ${errors.hireDate ? "border-red-500" : "border-gray-300"}`}
+            id="hireDate"
+            className={`datepicker border rounded-lg p-2 mt-1 ${
+              errors.hireDate ? "border-red-500" : "border-gray-300"
+            }`}
             selected={newEmployee.hireDate ? new Date(newEmployee.hireDate) : null}
             onChange={(date: Date | null) => handleDateChange(date, "hireDate")}
             dateFormat="yyyy-MM-dd"
@@ -261,6 +270,7 @@ const EmployeeAddCard: React.FC<Props> = ({ newEmployee, handleInputChange, hand
             Date of Birth
           </label>
           <DatePicker
+            id="dob"
             className={`datepicker border rounded-lg p-2 mt-1 ${errors.dob ? "border-red-500" : "border-gray-300"}`}
             selected={newEmployee.dob ? new Date(newEmployee.dob) : null}
             onChange={(date: Date | null) => handleDateChange(date, "dob")}
