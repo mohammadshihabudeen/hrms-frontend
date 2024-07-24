@@ -1,108 +1,109 @@
-import { RootState } from "@/app/store/store";
-import { render, screen } from "@testing-library/react";
-import { useRouter } from "next/navigation";
-import React from "react";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
-import EmployeeDetail from "../pages/Employees/Details/[id]/page";
+import { EmployeeDetailCard } from '@/app/components/ui/cards/EmployeeDetailCard';
+import { render, screen } from '@testing-library/react';
+import { Session } from 'next-auth'; // Ensure to import the correct type
+import { SessionProvider } from 'next-auth/react';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import { PersonelDetailCard } from '../components/ui/cards/PersonelDetailCard';
 
-jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
-}));
+const mockStore = configureStore([]);
 
-const mockedEmployees: Employee[] = [
-  {
-    id: "1",
-    employeeName: "Mohammad Shihabudeen",
-    employeeId: "ShihabZenquix",
-    email: "city.shihabudeen@gmail.com",
-    profile: "/assets/profile.svg",
-    jobTitle: "Software developer",
-    jobRole: "Admin",
-    salary: "1300",
-    hireDate: "12-12-2021",
-    contract: "perm",
-    maritalStatus: "Unmarried",
-    degree: "be",
-    location: "Banglore",
-    dob: "04-11-2002",
-    country: "india",
-    phone: "12321",
-    department: "Software",
-    createdBy: "Shihab",
-    updatedBy: "Shihab",
-  },
-];
-
-const mockStore = configureStore<RootState>([]);
-
-describe("EmployeeDetail", () => {
+describe('Detail Cards', () => {
   let store: any;
-  const push = jest.fn();
+  const session: Session = {
+    user: {
+      id: '1',
+      role: 'admin',
+      name: 'Admin User',
+      email: 'admin@example.com',
+      image: 'https://example.com/admin.png',
+    },
+    expires: '2024-07-23T00:00:00.000Z', // Ensure this matches the Session type
+  };
+
+  const personelDetailProps = {
+    name: 'Personal Details',
+    icon: <span>Edit</span>,
+    sicon: <span>Save</span>,
+    isEditing: false,
+    selectedEmployee: {
+      profile: '/profile.jpg',
+      email: 'test@example.com',
+      employeeName: 'John Doe',
+      employeeId: '1',
+    },
+    details: [
+      { name: 'employeeName', icon: <span>Name Icon</span>, value: 'John Doe' },
+    ],
+    handleInputChange: jest.fn(),
+  };
+
+  const employeeDetailProps = {
+    name: 'Employee Details',
+    icon: <span>Edit</span>,
+    sicon: <span>Save</span>,
+    isEditing: false,
+    details: [
+      { label: 'Job Title', name: 'jobTitle', icon: <span>Job Icon</span>, value: 'Developer', className: '', options: ['Developer', 'Manager'] },
+    ],
+    handleInputChange: jest.fn(),
+  };
 
   beforeEach(() => {
     store = mockStore({
-      sidebar: {
-        isOpen: false,
-        elements: [],
-      },
-      user: {
-        profileImage: "",
-        name: "",
-        position: "",
-      },
-      auth: {
-        isAuthenticated: false,
-        user: null,
-        loading: false,
-        error: null,
-      },
-      session: {
-        // Add this property
-        session: null,
-        isAdminAuthorized: false,
-        isManagerAuthorized: false,
-      },
-      activities: {
-        activities: [],
-      },
-      education: {
-        details: {},
-      },
-      experience: {
-        experiences: [],
-      },
-      certificates: {
-        certificates: [],
-        loading: false,
-        error: null,
-      },
-      attendance: {
-        isCheckedIn: false,
-        attendance: [],
-        selectedMonth: "",
-      },
-      employees: {
-        employees: mockedEmployees,
-        selectedEmployeeId: "1",
-        loading: false,
-        error: null,
-      },
-    });
-
-    (useRouter as jest.Mock).mockReturnValue({
-      push,
+      session: { isAdminAuthorized: true },
     });
   });
 
-  it("renders EmployeeDetail component", () => {
+  it('should render PersonelDetailCard with given props', () => {
     render(
       <Provider store={store}>
-        <EmployeeDetail params={{ id: "1" }} />
-      </Provider>,
+        <SessionProvider session={session}>
+          <PersonelDetailCard {...personelDetailProps}/>
+        </SessionProvider>
+      </Provider>
     );
 
-    expect(screen.getByText("Employee Details")).toBeInTheDocument();
-    expect(screen.getByText("Personal Details")).toBeInTheDocument();
+    expect(screen.getByText('Personal Details')).toBeInTheDocument();
+    expect(screen.getByText('John Doe')).toBeInTheDocument();
+  });
+
+  it('should render EmployeeDetailCard with given props', () => {
+    render(
+      <Provider store={store}>
+        <SessionProvider session={session}>
+          <EmployeeDetailCard {...employeeDetailProps}/>
+        </SessionProvider>
+      </Provider>
+    );
+
+    expect(screen.getByText('Employee Details')).toBeInTheDocument();
+    expect(screen.getByText('Developer')).toBeInTheDocument();
+  });
+
+  it('should render edit and save icons in PersonelDetailCard when isAdminAuthorized is true', () => {
+    render(
+      <Provider store={store}>
+        <SessionProvider session={session}>
+          <PersonelDetailCard {...personelDetailProps} />
+        </SessionProvider>
+      </Provider>
+    );
+
+    expect(screen.getByText('Edit')).toBeInTheDocument();
+    expect(screen.getByText('Save')).toBeInTheDocument();
+  });
+
+  it('should render edit and save icons in EmployeeDetailCard when isAdminAuthorized is true', () => {
+    render(
+      <Provider store={store}>
+        <SessionProvider session={session}>
+          <EmployeeDetailCard {...employeeDetailProps} />
+        </SessionProvider>
+      </Provider>
+    );
+
+    expect(screen.getByText('Edit')).toBeInTheDocument();
+    expect(screen.getByText('Save')).toBeInTheDocument();
   });
 });
