@@ -2,6 +2,8 @@ import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { ChangeEvent, useEffect } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { selectIsAdminAuthorized, setSession } from "../../../store/slices/sessionSlice";
 import { RootState } from "../../../store/store";
 import SendMailButton from "../buttons/SendMailButton";
@@ -14,6 +16,7 @@ interface DetailCardProps {
   selectedEmployee: any;
   details: Array<{ name: string; icon: React.ReactNode; value: string; options?: string[] }>;
   handleInputChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  handleDateChange?: (date: Date | null) => void;
 }
 
 export const PersonelDetailCard: React.FC<DetailCardProps> = ({
@@ -24,6 +27,7 @@ export const PersonelDetailCard: React.FC<DetailCardProps> = ({
   selectedEmployee,
   details,
   handleInputChange,
+  handleDateChange,
 }) => {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
@@ -34,6 +38,13 @@ export const PersonelDetailCard: React.FC<DetailCardProps> = ({
       dispatch(setSession(session));
     }
   }, [session, dispatch]);
+
+  const handleDateChangeInternal = (date: Date | null, name: string) => {
+    if (handleDateChange) {
+      handleDateChange(date);
+    }
+    // Optionally, you can also handle other actions here if needed
+  };
 
   return (
     <div className="card bg-white shadow-md rounded-lg mb-8">
@@ -63,7 +74,16 @@ export const PersonelDetailCard: React.FC<DetailCardProps> = ({
             <div key={idx} className="mb-4">
               <div className="flex items-center mb-1">
                 {item.icon}
-                {isEditing ? (
+                {isEditing && item.name === "dob" ? (
+                  <div className="ml-2">
+                    <DatePicker
+                      selected={selectedEmployee.dob ? new Date(selectedEmployee.dob) : null}
+                      onChange={(date) => handleDateChangeInternal(date, item.name)}
+                      dateFormat="yyyy-MM-dd"
+                      className="p-2 border rounded"
+                    />
+                  </div>
+                ) : isEditing ? (
                   item.options ? (
                     <select
                       name={item.name}
@@ -87,16 +107,19 @@ export const PersonelDetailCard: React.FC<DetailCardProps> = ({
                     />
                   )
                 ) : (
-                  <div>{item.value}</div>
+                  <div className="ml-2">{item.value}</div>
                 )}
               </div>
             </div>
           ))}
-          {isAdminAuthorized && (
-            <SendMailButton 
-              email={selectedEmployee.email} 
-              employeeName={selectedEmployee.employeeName} 
-              employeeId={selectedEmployee.employeeId} />
+          {isAdminAuthorized && !isEditing && (
+            <div className="mt-4 ml-4">
+              <SendMailButton 
+                email={selectedEmployee.email} 
+                employeeName={selectedEmployee.employeeName} 
+                employeeId={selectedEmployee.employeeId} 
+              />
+            </div>
           )}
         </div>
       </div>
